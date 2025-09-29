@@ -10,11 +10,16 @@ RFA Proyect for DeepGlobe-Road-Extraction
 ```bash
  python3.12 -m venv venv
  source venv/bin/activate
- 
+
  # install module
  pip install -e app/
- 
+
  # install requirements
  pip install uv
  uv pip install -r requirements.txt
+
+
+# Pre-commit
+sudo apt install pre-commit
+pre-commit install
 ```
