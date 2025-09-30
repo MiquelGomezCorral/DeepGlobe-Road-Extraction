@@ -3,31 +3,34 @@
 Configuration of project variables that we want to have available
 everywhere and considered configuration.
 """
-# import os
 import dataclasses
-from dataclasses import dataclass
+import os
 from argparse import Namespace
+from dataclasses import dataclass
 
-@dataclass 
+
+@dataclass
 class Configuration:
     """Configuration class for the project."""
 
-    exp_name: str = "base_name"
-    seed:     int = 42
+    seed: int = 42
 
-    gym_id:          str = None
-    learning_rate: float = 2.5e-4
-    total_timesteps: int = 25_000
+    # ========================= PATHS ==========================
+    DATA_FOLDER: str = "../data"
+    MODELS_FOLDER: str = "../models"
+    LOGS_FOLDER: str = "../logs"
 
-    torch_deterministic: bool = True
-    cuda:                bool = True
+    metadata_path: str = os.path.join(DATA_FOLDER, "metadata.csv")
+    train_folder: str = os.path.join(DATA_FOLDER, "train")
+    val_folder: str = os.path.join(DATA_FOLDER, "validation")
+    test_folder: str = os.path.join(DATA_FOLDER, "test")
 
-    track_run:         bool = False
-    wandb_project_name: str = "RL"
-    wandb_entity:       str = None
+    logs_path: str = os.path.join(LOGS_FOLDER, "log.log")
 
     def __post_init__(self):
+        """Post-initialization."""
         ...
+
 
 def args_to_config(args: Namespace):
     """From the args namespace, create a Configuration.
@@ -37,7 +40,7 @@ def args_to_config(args: Namespace):
     Fields in the args that are not in the Config this will be ignored.
 
     Args:
-        args (Namespace): Parsed arguments. 
+        args (Namespace): Parsed arguments.
 
     Returns:
         Configuration: Configuration with args values.
