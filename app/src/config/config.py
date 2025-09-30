@@ -22,8 +22,14 @@ class Configuration:
 
     metadata_path: str = os.path.join(DATA_FOLDER, "metadata.csv")
     train_folder: str = os.path.join(DATA_FOLDER, "train")
+    train_img_folder: str = os.path.join(DATA_FOLDER, "train", "images")
+    train_gt_folder: str = os.path.join(DATA_FOLDER, "train", "groundtruth")
     val_folder: str = os.path.join(DATA_FOLDER, "validation")
+    val_img_folder: str = os.path.join(DATA_FOLDER, "validation", "images")
+    val_gt_folder: str = os.path.join(DATA_FOLDER, "validation", "groundtruth")
     test_folder: str = os.path.join(DATA_FOLDER, "test")
+    test_img_folder: str = os.path.join(DATA_FOLDER, "test", "images")
+    test_gt_folder: str = os.path.join(DATA_FOLDER, "test", "groundtruth")
 
     logs_path: str = os.path.join(LOGS_FOLDER, "log.log")
 
