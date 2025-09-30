@@ -49,17 +49,18 @@ def to_device(x, device=None):
         return x.cpu()
 
 
-def load_image_from_directory(image_path: str) -> Image.Image | None:
+def load_image(image_path: str, to_bw: bool = False) -> Image.Image | None:
     """Load an image from a specified file path.
 
     Args:
         image_path (str): Path to the image file.
+        to_bw (bool): Whether to convert the image to black and white.
 
     Returns:
         Image.Image | None: Loaded image or None if loading fails.
     """
     try:
-        img = Image.open(image_path)
+        img = Image.open(image_path) if to_bw else Image.open(image_path).convert("L")
         return img
     except FileNotFoundError:
         print(f"Error: The file '{image_path}' does not exist.")

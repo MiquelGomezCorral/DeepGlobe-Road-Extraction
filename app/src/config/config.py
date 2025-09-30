@@ -11,31 +11,56 @@ from dataclasses import dataclass
 
 @dataclass
 class Configuration:
-    """Configuration class for the project."""
+    """Configuration class for the project.
+
+    This class contains all the configuration variables for the project.
+    """
 
     seed: int = 42
-
+    augmented: bool = False
+    max_samples: int = None
     # ========================= PATHS ==========================
-    DATA_FOLDER: str = "../data"
     MODELS_FOLDER: str = "../models"
     LOGS_FOLDER: str = "../logs"
+    TEMP_FOLDER: str = "../temp"
+    DATA_FOLDER: str = "../data"
+    DATA_BASIC_FOLDER: str = os.path.join(DATA_FOLDER, "basic")
+    DATA_AUG_FOLDER: str = os.path.join(DATA_FOLDER, "augmented")
 
     metadata_path: str = os.path.join(DATA_FOLDER, "metadata.csv")
-    train_folder: str = os.path.join(DATA_FOLDER, "train")
-    train_img_folder: str = os.path.join(DATA_FOLDER, "train", "images")
-    train_gt_folder: str = os.path.join(DATA_FOLDER, "train", "groundtruth")
-    val_folder: str = os.path.join(DATA_FOLDER, "validation")
-    val_img_folder: str = os.path.join(DATA_FOLDER, "validation", "images")
-    val_gt_folder: str = os.path.join(DATA_FOLDER, "validation", "groundtruth")
-    test_folder: str = os.path.join(DATA_FOLDER, "test")
-    test_img_folder: str = os.path.join(DATA_FOLDER, "test", "images")
-    test_gt_folder: str = os.path.join(DATA_FOLDER, "test", "groundtruth")
+    original_data_path: str = os.path.join(DATA_FOLDER, "raw", "original")
+
+    train_folder: str = os.path.join(DATA_BASIC_FOLDER, "train")
+    train_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "train", "images")
+    train_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "train", "groundtruth")
+
+    val_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation")
+    val_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation", "images")
+    val_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation", "groundtruth")
+
+    test_folder: str = os.path.join(DATA_BASIC_FOLDER, "test")
+    test_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "test", "images")
+    test_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "test", "groundtruth")
 
     logs_path: str = os.path.join(LOGS_FOLDER, "log.log")
 
     def __post_init__(self):
         """Post-initialization."""
-        ...
+        if not self.augmented:
+            return
+
+        # ========================= PARTITION OF DATA ==========================
+        self.train_folder = os.path.join(self.DATA_AUG_FOLDER, "train")
+        self.train_img_folder = os.path.join(self.DATA_AUG_FOLDER, "train", "images")
+        self.train_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "train", "groundtruth")
+
+        self.val_folder = os.path.join(self.DATA_AUG_FOLDER, "validation")
+        self.val_img_folder = os.path.join(self.DATA_AUG_FOLDER, "validation", "images")
+        self.val_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "validation", "groundtruth")
+
+        self.test_folder = os.path.join(self.DATA_AUG_FOLDER, "test")
+        self.test_img_folder = os.path.join(self.DATA_AUG_FOLDER, "test", "images")
+        self.test_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "test", "groundtruth")
 
 
 def args_to_config(args: Namespace):

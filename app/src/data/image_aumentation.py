@@ -6,7 +6,7 @@ from typing import Literal
 from PIL import Image
 from src.config import Configuration, PipeType
 from src.data import SampleImage, Transformation, split_image_into_grid
-from src.utils import load_image_from_directory, split_seed
+from src.utils import load_image, split_seed
 
 
 def create_base_images(sample_directory, output_directory):
@@ -119,8 +119,8 @@ def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configurati
 
     """
     image, truth = sample.get()
-    image_in = load_image_from_directory(image)
-    truth_in = load_image_from_directory(truth)
+    image_in = load_image(image)
+    truth_in = load_image(truth)
 
     for i, (pipeline, seed) in enumerate(zip(pipelines, split_seed(CONFIG.seed))):
         image_out, truth_out = apply_transformation(image_in, truth_in, pipeline, seed)
