@@ -19,6 +19,10 @@ RFA Proyect for DeepGlobe-Road-Extraction
  uv pip install -r requirements.txt
 
 
+# For notebooks
+pip install ipykernel
+python -m ipykernel install --user --name=venv --display-name "Python (venv)"
+
 # Pre-commit
 sudo apt install pre-commit
 pre-commit install
