@@ -18,6 +18,9 @@ def split_data(CONFIG: Configuration):
 
     Args:
         CONFIG (Configuration): Configuration object containing dataset paths and parameters.
+
+    Returns:
+        tuple: train, val, test. SampleImage objects for train, validation, and test sets.
     """
     # =================================================================
     #                           Get image pairs
@@ -54,6 +57,8 @@ def split_data(CONFIG: Configuration):
     print_log(f" - Train samples:      {len(train):6_}")
     print_log(f" - Validation samples: {len(val):6_}")
     print_log(f" - Test samples:       {len(test):6_}")
+
+    return train, val, test
 
 
 def save_splited_data(
@@ -113,7 +118,6 @@ def augment_data(
     set_seed(CONFIG_AUG.seed)
     selected_pipelines = pipelines.simple_pipeline
 
-    print_separator("SAVING IMAGES IN DISK", sep_type="LONG")
     print_log(f" - Train images folder:      {CONFIG_AUG.train_img_folder}")
     print_log(f" - Train groundtruth folder: {CONFIG_AUG.train_gt_folder}")
     print_log(f" - Val images folder:        {CONFIG_AUG.val_img_folder}")
@@ -121,17 +125,17 @@ def augment_data(
     print_log(f" - Test images folder:       {CONFIG_AUG.test_img_folder}")
     print_log(f" - Test groundtruth folder:  {CONFIG_AUG.test_gt_folder}")
 
-    print_separator("SAVING TRAIN", sep_type="SHORT")
+    print_separator("GENERATING TRAIN", sep_type="SHORT")
     CONFIG_AUG.partition = "train"
     for train_sample in tqdm(train):
         apply_pipeline(train_sample, selected_pipelines, CONFIG_AUG)
 
-    print_separator("SAVING VALIDATION", sep_type="SHORT")
+    print_separator("GENERATING VALIDATION", sep_type="SHORT")
     CONFIG_AUG.partition = "val"
     for val_sample in tqdm(val):
         apply_pipeline(val_sample, selected_pipelines, CONFIG_AUG)
 
-    print_separator("SAVING TEST", sep_type="SHORT")
+    print_separator("GENERATING TEST", sep_type="SHORT")
     CONFIG_AUG.partition = "test"
     for test_sample in tqdm(test):
         apply_pipeline(test_sample, selected_pipelines, CONFIG_AUG)

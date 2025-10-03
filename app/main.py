@@ -41,10 +41,17 @@ if __name__ == "__main__":
     # ======================================================================================
     p_generate = subparsers.add_parser("generate-dataset", help="Generate dataset.")
     p_generate.add_argument(
+        "-o", "--original_data_path", type=str, default=None, help="Path to the original data"
+    )
+    p_generate.add_argument(
         "-m", "--max_samples", type=int, default=None, help="Max samples to load"
     )
     p_generate.add_argument(
-        "-o", "--original_data_path", type=str, default=None, help="Path to the original data"
+        "-c",
+        "--copy_original",
+        action="store_false",
+        default=True,
+        help="Copy and split original data",
     )
     p_generate.set_defaults(func=cmd_generate_dataset)
 

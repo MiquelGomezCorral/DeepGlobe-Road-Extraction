@@ -22,6 +22,7 @@ class Configuration:
     seed: int = 42
     max_samples: int = None
     augmented: bool = False
+    copy_original: bool = True
     augmented_samples_per_image: int = 3
 
     val_split: float = 0.15
@@ -110,5 +111,5 @@ def args_to_config(args: Namespace):
         Configuration: Configuration with args values.
     """
     fields = {f.name for f in dataclasses.fields(Configuration)}
-    filtered = {k: v for k, v in vars(args).items() if k in fields}
+    filtered = {k: v for k, v in vars(args).items() if k in fields and v is not None}
     return Configuration(**filtered)

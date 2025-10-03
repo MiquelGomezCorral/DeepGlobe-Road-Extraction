@@ -18,7 +18,6 @@ def generate_dataset(CONFIG: Configuration):
     #                           Configuration
     # =================================================================
     print_separator("CONFIGURATION", sep_type="LONG")
-    CONFIG = Configuration()
 
     # =================================================================
     #                           SPLIT DATA
@@ -29,8 +28,9 @@ def generate_dataset(CONFIG: Configuration):
     # =================================================================
     #                           SAVE DATA
     # =================================================================
-    print_separator("PREPEARING BASIC DATA", sep_type="LONG")
-    save_splited_data(CONFIG, train, val, test)
+    if CONFIG.copy_original:
+        print_separator("PREPEARING BASIC DATA", sep_type="LONG")
+        save_splited_data(CONFIG, train, val, test)
 
     # =================================================================
     #                           AUGMENT DATA

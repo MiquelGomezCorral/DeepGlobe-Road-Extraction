@@ -2,7 +2,6 @@
 
 Functions and classes for image transformations and sample representation.
 """
-import random
 from enum import Enum
 
 import numpy as np
@@ -176,46 +175,33 @@ def split_image_into_grid(image: Image.Image, n: int) -> list[Image.Image]:
 
 
 # ROTATION
-def rotate_image(image, seed):
+def rotate_image(image, seed, any_angle: bool = False):
     """Rotate image and crop to original size.
-
-    Rotates an image by a specified number of degrees, crops it to the original size,
-    and fills blank space with black.
 
     Args:
         image (Image.Image): The input image to be rotated.
         seed (int): The random seed used for generating the rotation angle.
+        any_angle (bool): If True, rotate by any angle 1-360;
+                          if False, rotate only by 90, 180, or 270 degrees.
 
     Returns:
-        Image.Image:
-            A PIL Image object representing the rotated and cropped image.
-
-    Example:
-        from src.data import image_transformation as it
-        img_in = "data/images/satImage_0000001.png"  # Replace with your image file
-        truth_in = "data/groundtruth/satImage_0000001.png"  # Replace with your image file
-        degrees = 45                           # Rotation angle in degrees (counter-clockwise)
-        out_dir_img = "data/exp_image"  # Replace with your desired output folder
-        out_dir_truth = "data/exp_truth"  # Replace with your desired output folder
-
-        # Call the function
-        rotate_image_crop(img_in, degrees, out_dir_img, output_name="img_45_rot.png")
-        rotate_image_crop(truth_in, degrees, out_dir_truth, output_name="truth_45_rot.png")
+        Image.Image: Rotated and cropped image.
     """
-    # Open the image
     img = image.copy()
-    original_size = img.size  # Original dimensions (width, height)
+    original_size = img.size
 
-    # Create a larger canvas with a black background
-    larger_canvas = Image.new("RGB", img.size, (0, 0, 0))  # Black background
+    # Create a larger canvas with black background
+    larger_canvas = Image.new("RGB", img.size, (0, 0, 0))
     larger_canvas.paste(img, (0, 0))
 
-    # Rotate the image
-    random.seed(seed)  # Set the seed for reproducibility
-    degrees = random.randint(1, 360)  # nosec B311
-    rotated_img = larger_canvas.rotate(degrees, resample=Image.BICUBIC, expand=False)
+    # Set rotation angle
+    np.random.seed(seed)
+    if any_angle:  # any angle except 0
+        degrees = np.random.randint(1, 359)
+    else:
+        degrees = np.random.choice([90, 180, 270])
 
-    # Crop back to the original size
+    rotated_img = larger_canvas.rotate(degrees, resample=Image.BICUBIC, expand=False)
     rotated_cropped_img = rotated_img.crop((0, 0, original_size[0], original_size[1]))
 
     return rotated_cropped_img
@@ -276,21 +262,21 @@ def random_subimage(image, seed):
         random_subimage(truth_in, 12345, out_dir_truth, output_name="subimage.png")
     """
     # Set the random seed for reproducibility
-    random.seed(seed)
+    np.random.seed(seed)
 
     # Get image dimensions
     width, height = image.size
 
     # Generate random subimage dimensions between 10 and 400
-    subimage_size = random.randint(10, 400)  # nosec B311
+    subimage_size = np.random.randint(10, 400)  # nosec B311
 
     # Calculate the max allowable top-left corner coordinates
     max_x = width - subimage_size
     max_y = height - subimage_size
 
     # Randomly select the top-left corner of the subimage
-    x = random.randint(0, max_x)  # nosec B311
-    y = random.randint(0, max_y)  # nosec B311
+    x = np.random.randint(0, max_x)  # nosec B311
+    y = np.random.randint(0, max_y)  # nosec B311
 
     # Define the bounding box for the subimage
     box = (x, y, x + subimage_size, y + subimage_size)
@@ -335,8 +321,8 @@ def shuffle_image(image, seed):
     width, height = img.size
 
     # Set the seed for reproducibility
-    random.seed(seed)
-    n = random.randint(2, 5)  # nosec B311
+    np.random.seed(seed)
+    n = np.random.randint(2, 5)  # nosec B311
 
     # Calculate the size of each grid cell
     grid_width = width // n
@@ -354,10 +340,10 @@ def shuffle_image(image, seed):
 
     # Set the random seed for reproducibility
     if seed is not None:
-        random.seed(seed)
+        np.random.seed(seed)
 
     # Shuffle the grid cells
-    random.shuffle(grid_cells)
+    np.random.shuffle(grid_cells)
 
     # Create a new blank image to reconstruct the shuffled image
     shuffled_img = Image.new("RGB", (width, height))
@@ -403,8 +389,8 @@ def add_random_circles(image, seed):
     max_diameter = min(width, height) // 8
 
     # Set the random seed for reproducibility
-    random.seed(seed)
-    num_circles = random.randint(1, 32)  # nosec B311
+    np.random.seed(seed)
+    num_circles = np.random.randint(1, 32)  # nosec B311
 
     # Create a drawing object
     draw = ImageDraw.Draw(img)
@@ -412,11 +398,11 @@ def add_random_circles(image, seed):
     # Generate and draw circles
     for _ in range(num_circles):
         # Random diameter
-        diameter = random.randint(1, max_diameter)  # nosec B311
+        diameter = np.random.randint(1, max_diameter)  # nosec B311
 
         # Random position ensuring the circle stays within bounds
-        x = random.randint(0, width - diameter)  # nosec B311
-        y = random.randint(0, height - diameter)  # nosec B311
+        x = np.random.randint(0, width - diameter)  # nosec B311
+        y = np.random.randint(0, height - diameter)  # nosec B311
 
         # Draw the circle
         draw.ellipse([x, y, x + diameter, y + diameter], fill="black")
@@ -448,8 +434,8 @@ def set_brightness(image, seed):
         set_brightness(truth_in, seed, out_dir_truth, output_name="brightness_adjusted.png")
     """
     # Brightness
-    random.seed(seed)
-    brightness_level = random.randint(0, 100)  # nosec B311
+    np.random.seed(seed)
+    brightness_level = np.random.randint(0, 100)  # nosec B311
 
     # Open the image
     img = image.copy()
@@ -522,13 +508,13 @@ def shift_color_towards_random(image, seed):
     img = image.copy()
 
     # Set the random seed for reproducibility
-    random.seed(seed)
+    np.random.seed(seed)
 
     # Generate a random color (R, G, B) where each channel is between 0 and 255
     random_color = (
-        random.randint(0, 255),  # Red channel # nosec B311
-        random.randint(0, 255),  # Green channel # nosec B311
-        random.randint(0, 255),  # Blue channel # nosec B311
+        np.random.randint(0, 255),  # Red channel # nosec B311
+        np.random.randint(0, 255),  # Green channel # nosec B311
+        np.random.randint(0, 255),  # Blue channel # nosec B311
     )
 
     # Split the image into RGB channels
@@ -575,8 +561,8 @@ def add_noise_to_image(image, seed):
     img = image.copy()
     img_array = np.array(img)
 
-    random.seed(seed)
-    noise_level = random.randint(5, 40)  # nosec B311
+    np.random.seed(seed)
+    noise_level = np.random.randint(5, 40)  # nosec B311
 
     # Generate random noise
     noise = np.random.randint(

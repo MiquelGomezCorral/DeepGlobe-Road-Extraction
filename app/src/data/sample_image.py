@@ -4,6 +4,7 @@ Represents images and their transformations.
 """
 import os
 
+from PIL import Image
 from src.utils import load_image
 
 
@@ -29,27 +30,27 @@ class SampleImage:
         if load_images:
             self.get_images(keep_in_memory=keep_in_memory)
 
-    def get_paths(self):
+    def get_paths(self) -> tuple[str, str]:
         """Retrieve both the input image and the ground truth as a tuple.
 
         Returns:
-            tuple: A tuple containing the PATH input image and the ground truth.
+            tuple[str, str]: A tuple containing the PATH input image and the ground truth.
         """
         return self.path_img_x, self.path_img_y
 
-    def get_names(self):
+    def get_names(self) -> tuple[str, str]:
         """Retrieve both the input image and the ground truth file names as a tuple.
 
         Returns:
-            tuple: A tuple containing the file names of the input image and the ground truth.
+            tuple[str, str]. File names of the input image and the ground truth.
         """
         return os.path.basename(self.path_img_x), os.path.basename(self.path_img_y)
 
-    def get_images(self, keep_in_memory: bool = True):
+    def get_images(self, keep_in_memory: bool = True) -> tuple[Image.Image, Image.Image]:
         """Retrieve both the input image and the ground truth as a tuple.
 
         Returns:
-            tuple: A tuple containing the input image and the ground truth.
+            tuple[Image.Image, Image.Image]: input image and the ground truth.
         """
         if self.img_x is not None and self.img_y is not None:
             return self.img_x, self.img_y
@@ -82,3 +83,13 @@ class SampleImage:
         self.img_x.close()
         self.img_y.close()
         self.img_x = self.img_y = None
+
+    def set_images(self, img_x: Image.Image, img_y: Image.Image) -> None:
+        """Set the input image and ground truth.
+
+        Args:
+            img_x (Image.Image): The input image.
+            img_y (Image.Image): The ground truth image.
+        """
+        self.img_x = img_x
+        self.img_y = img_y

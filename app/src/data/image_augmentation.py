@@ -1,7 +1,5 @@
 """Image augmentation and transformation utilities."""
 
-import os
-
 from PIL import Image
 from src.config import Configuration
 from src.utils import get_data_paths_from_config, split_seed
@@ -71,8 +69,10 @@ def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configurati
 
         new_name_x = f"{img_name}_{i}_{Transformation.pipe_to_name(pipeline)}.png"
         new_name_y = f"{gt_name}_{i}_{Transformation.pipe_to_name(pipeline)}.png"
-        new_path_x = os.path.join(img_folder, new_name_x)
-        new_path_y = os.path.join(gt_folder, new_name_y)
 
-        img_aug.save(new_path_x)
-        gt_aug.save(new_path_y)
+        aug_sample = SampleImage(
+            new_name_x,
+            new_name_y,
+        )
+        aug_sample.set_images(img_aug, gt_aug)
+        aug_sample.save_images(img_folder, gt_folder)
