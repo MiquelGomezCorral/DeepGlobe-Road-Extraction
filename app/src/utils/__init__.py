@@ -3,4 +3,10 @@
 Utility functions for any tastk in the app.
 """
 
-from .utils import load_image, split_seed, to_device  # noqa: F401
+from .utils import (  # noqa: F401
+    get_data_paths_from_config,
+    load_image,
+    set_seed,
+    split_seed,
+    to_device,
+)

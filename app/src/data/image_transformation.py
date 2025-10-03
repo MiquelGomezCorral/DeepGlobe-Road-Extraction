@@ -106,6 +106,17 @@ class Transformation(Enum):
             pipe.append(Transformation.NOISE)
         return pipe
 
+    def get_gt_transformations(self):
+        """Get the transformations that can be applied to the ground truth images.
+
+        Returns:
+            list: A list of transformations that can be applied to the ground truth images.
+        """
+        # Return the module-level VALID_GT_TRANSFORMATIONS constant (defined below)
+        from .image_transformation import VALID_GT_TRANSFORMATIONS as _VALID
+
+        return _VALID
+
 
 # DIVISION N x X
 def split_image_into_grid(image: Image.Image, n: int) -> list[Image.Image]:
@@ -565,7 +576,7 @@ def add_noise_to_image(image, seed):
     img_array = np.array(img)
 
     random.seed(seed)
-    noise_level = random.randint(0, 255)  # nosec B311
+    noise_level = random.randint(5, 40)  # nosec B311
 
     # Generate random noise
     noise = np.random.randint(
@@ -579,3 +590,13 @@ def add_noise_to_image(image, seed):
     noisy_img = Image.fromarray(noisy_img_array)
 
     return noisy_img
+
+
+# Transformations that are valid to apply on ground truth images
+VALID_GT_TRANSFORMATIONS = [
+    Transformation.ROTATE,
+    Transformation.MIRROR,
+    Transformation.SUB,
+    Transformation.SHUFFLE,
+    Transformation.CIRCLES,
+]

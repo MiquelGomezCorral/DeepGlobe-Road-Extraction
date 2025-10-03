@@ -5,10 +5,32 @@ This module contains various utility functions that are used throughout the proj
 import os
 import random
 
+import numpy as np
 import torch
 from maikol_utils.file_utils import list_dir_files
 from maikol_utils.print_utils import print_error, print_log
 from PIL import Image
+from src.config import Configuration
+
+
+def set_seed(seed: int) -> None:
+    """Set the seed for random number generators in various libraries.
+
+    This function sets the seed for the built-in random module, NumPy, and PyTorch
+    to ensure reproducibility of results across different runs.
+
+    Args:
+        seed (int): The seed value to be set for the random number generators.
+
+    Returns:
+        None
+    """
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    print_log(f" - Random seed set to: {seed}")
 
 
 def split_seed(seed, n):
@@ -94,3 +116,30 @@ def ensure_monochannel(folder_path: str) -> None:
             print_log(f"Processed and saved: {file_path}")
         except Exception as e:
             print_error(f"Failed to process {file_path}: {e}")
+
+
+def get_data_paths_from_config(CONFIG: Configuration) -> tuple[str, str]:
+    """Get data paths from the configuration current partition.
+
+    Args:
+        CONFIG (Configuration): The configuration object containing data paths.
+
+    Returns:
+        tuple[str, str]: img_folder, gt_folder: A tuple with img and gt paths.
+    """
+    if CONFIG.partition not in ["train", "val", "test"]:
+        raise ValueError(
+            f"Invalid partition: {CONFIG.partition}. Must be 'train', 'val', or 'test'."
+        )
+
+    if CONFIG.partition == "train":
+        img_folder = CONFIG.train_img_folder
+        gt_folder = CONFIG.train_gt_folder
+    elif CONFIG.partition == "val":
+        img_folder = CONFIG.val_img_folder
+        gt_folder = CONFIG.val_gt_folder
+    else:  # CONFIG.partition == "test"
+        img_folder = CONFIG.test_img_folder
+        gt_folder = CONFIG.test_gt_folder
+
+    return img_folder, gt_folder

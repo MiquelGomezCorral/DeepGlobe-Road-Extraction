@@ -7,6 +7,9 @@ import dataclasses
 import os
 from argparse import Namespace
 from dataclasses import dataclass
+from typing import Literal
+
+from maikol_utils.file_utils import make_dirs
 
 
 @dataclass
@@ -17,11 +20,13 @@ class Configuration:
     """
 
     seed: int = 42
-    augmented: bool = False
     max_samples: int = None
+    augmented: bool = False
+    augmented_samples_per_image: int = 3
 
     val_split: float = 0.15
     test_split: float = 0.15
+    partition: Literal["train", "val", "test"] = "train"
     # ========================= PATHS ==========================
     MODELS_FOLDER: str = "../models"
     LOGS_FOLDER: str = "../logs"
@@ -51,27 +56,44 @@ class Configuration:
 
     def __post_init__(self):
         """Post-initialization."""
-        if not self.augmented:
-            return
+        if self.augmented:
+            # ========================= PARTITION OF DATA ==========================
+            self.train_folder = os.path.join(self.DATA_AUG_FOLDER, "train")
+            self.train_img_folder = os.path.join(
+                self.DATA_AUG_FOLDER, "train", self.DATA_IMG_FOLDER_NAME
+            )
+            self.train_gt_folder = os.path.join(
+                self.DATA_AUG_FOLDER, "train", self.DATA_GT_FOLDER_NAME
+            )
 
-        # ========================= PARTITION OF DATA ==========================
-        self.train_folder = os.path.join(self.DATA_AUG_FOLDER, "train")
-        self.train_img_folder = os.path.join(
-            self.DATA_AUG_FOLDER, "train", self.DATA_IMG_FOLDER_NAME
-        )
-        self.train_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "train", self.DATA_GT_FOLDER_NAME)
+            self.val_folder = os.path.join(self.DATA_AUG_FOLDER, "validation")
+            self.val_img_folder = os.path.join(
+                self.DATA_AUG_FOLDER, "validation", self.DATA_IMG_FOLDER_NAME
+            )
+            self.val_gt_folder = os.path.join(
+                self.DATA_AUG_FOLDER, "validation", self.DATA_GT_FOLDER_NAME
+            )
 
-        self.val_folder = os.path.join(self.DATA_AUG_FOLDER, "validation")
-        self.val_img_folder = os.path.join(
-            self.DATA_AUG_FOLDER, "validation", self.DATA_IMG_FOLDER_NAME
-        )
-        self.val_gt_folder = os.path.join(
-            self.DATA_AUG_FOLDER, "validation", self.DATA_GT_FOLDER_NAME
-        )
+            self.test_folder = os.path.join(self.DATA_AUG_FOLDER, "test")
+            self.test_img_folder = os.path.join(
+                self.DATA_AUG_FOLDER, "test", self.DATA_IMG_FOLDER_NAME
+            )
+            self.test_gt_folder = os.path.join(
+                self.DATA_AUG_FOLDER, "test", self.DATA_GT_FOLDER_NAME
+            )
+            # =====================================================================
+        # END IF
 
-        self.test_folder = os.path.join(self.DATA_AUG_FOLDER, "test")
-        self.test_img_folder = os.path.join(self.DATA_AUG_FOLDER, "test", self.DATA_IMG_FOLDER_NAME)
-        self.test_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "test", self.DATA_GT_FOLDER_NAME)
+        make_dirs(
+            [
+                self.train_img_folder,
+                self.train_gt_folder,
+                self.val_img_folder,
+                self.val_gt_folder,
+                self.test_img_folder,
+                self.test_gt_folder,
+            ]
+        )
 
 
 def args_to_config(args: Namespace):

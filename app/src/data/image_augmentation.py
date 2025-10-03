@@ -4,10 +4,16 @@ import os
 from typing import Literal
 
 from PIL import Image
-from src.data import SampleImage, Transformation, split_image_into_grid
-from src.utils import load_image, split_seed
+from src.config import Configuration
+from src.utils import get_data_paths_from_config, split_seed
 
+from .image_transformation import (
+    VALID_GT_TRANSFORMATIONS,
+    Transformation,
+    split_image_into_grid,
+)
 from .pipelines import PipeType
+from .sample_image import SampleImage
 
 
 def create_base_images(sample_directory, output_directory):
@@ -65,7 +71,9 @@ def create_base_images(sample_directory, output_directory):
             index_counter += 1
 
 
-def apply_transformation(image_in, truth_in, transformations, seed):
+def apply_transformation(
+    img: Image.Image, gt: Image.Image, transformations: PipeType, seed: int
+) -> tuple[Image.Image, Image.Image]:
     """Apply a series of transformations to an image and its ground truth.
 
     The function modifies the provided image and ground truth based on the list
@@ -81,28 +89,21 @@ def apply_transformation(image_in, truth_in, transformations, seed):
         tuple: A tuple containing the transformed image and ground truth.
 
     """
-    image_copy = image_in.copy()
-    truth_copy = truth_in.copy()
+    img_copy = img.copy()
+    gt_copy = gt.copy()
 
     for transformation in transformations:
         transform_func = transformation.value[1]
-        # Apply transformation to the image_copy
-        image_copy = transform_func(image_copy, seed)
+        img_copy = transform_func(img_copy, seed)
 
-        # Apply transformation to truth_copy only if it is one of the specified transformations
-        if transformation in [
-            Transformation.ROTATE,
-            Transformation.MIRROR,
-            Transformation.SUB,
-            Transformation.SHUFFLE,
-            Transformation.CIRCLES,
-        ]:
-            truth_copy = transform_func(truth_copy, seed)
+        # Not all the transformations should be applied to the ground truth
+        if transformation in VALID_GT_TRANSFORMATIONS:
+            gt_copy = transform_func(gt_copy, seed)
 
-    return image_copy, truth_copy
+    return img_copy, gt_copy
 
 
-def apply_pipeline(sample: SampleImage, pipelines: PipeType, seed: int):
+def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configuration):
     """Apply transformation pipelines to a sample image and its ground truth.
 
     This function processes a sample point by applying a set of transformation
@@ -119,20 +120,22 @@ def apply_pipeline(sample: SampleImage, pipelines: PipeType, seed: int):
         None: The transformed images and ground truths are saved to the specified directory.
 
     """
-    image, truth = sample.get()
-    image_in = load_image(image)
-    truth_in = load_image(truth)
+    img, gt = sample.get_images()
+    img_name, gt_name = sample.get_names()
+    img_folder, gt_folder = get_data_paths_from_config(CONFIG)
 
-    seeds = split_seed(seed)
+    seeds = split_seed(CONFIG.seed, len(pipelines))
     for i, (pipeline, seed) in enumerate(zip(pipelines, seeds)):
-        image_out, truth_out = apply_transformation(image_in, truth_in, pipeline, seed)
-        truth_out = truth_out.convert("L")
+        img_aug, gt_aug = apply_transformation(img, gt, pipeline, seed)
+        gt_aug = gt_aug.convert("L")
 
-        image_path = f"{i}_{Transformation.pipe_to_name(pipeline)}.png"
-        truth_path = f"{i}_{Transformation.pipe_to_name(pipeline)}.png"
+        new_name_x = f"{img_name}_{i}_{Transformation.pipe_to_name(pipeline)}.png"
+        new_name_y = f"{gt_name}_{i}_{Transformation.pipe_to_name(pipeline)}.png"
+        new_path_x = os.path.join(img_folder, new_name_x)
+        new_path_y = os.path.join(gt_folder, new_name_y)
 
-        image_out.save(image_path)
-        truth_out.save(truth_path)
+        img_aug.save(new_path_x)
+        gt_aug.save(new_path_y)
 
 
 def create_training_data(
