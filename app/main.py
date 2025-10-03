@@ -1,17 +1,17 @@
 """Main file for scripts with arguments and call other functions."""
 
 import argparse
+
 import dotenv
+from scripts import generate_data
 from src.config import Configuration, args_to_config
 
-def cmd_read_extract(args: argparse.Namespace):
+
+def cmd_generate_dataset(args: argparse.Namespace):
     """Call read_extract_from_config_list with the given args."""
     CONFIG: Configuration = args_to_config(args)
-    ...
+    generate_data.generate_dataset(CONFIG)
 
-def cmd_test(args):
-    """Call test functions."""
-    ...
 
 # ======================================================================================
 #                                       ARGUMENTS
@@ -27,21 +27,18 @@ if __name__ == "__main__":
     # ======================================================================================
     #                                       read_extract
     # ======================================================================================
-    p_read = subparsers.add_parser("read-extract", help="Read and extract from config list")
-    p_read.add_argument(
-        "-d", "--dataset_name", type=str, default="Nuelas", help="Name of raw data folder"
+    p_generate = subparsers.add_parser("generate-dataset", help="Generate dataset.")
+    p_generate.add_argument(
+        "-m", "--max_samples", type=int, default=None, help="Max samples to load"
     )
-    p_read.add_argument("-m", "--max_files", type=int, default=None, help="Max files to load")
-    p_read.add_argument(
-        "-l", "--use_llm", action="store_false", default=True, help="Disable LLM extraction"
+    p_generate.add_argument(
+        "-o", "--original_data_path", type=str, default=None, help="Path to the original data"
     )
-    p_read.set_defaults(func=cmd_read_extract)
+    p_generate.set_defaults(func=cmd_generate_dataset)
 
     # ======================================================================================
-    #                                       test
+    #                                       trains
     # ======================================================================================
-    p_test = subparsers.add_parser("test", help="Test script with any code")
-    p_test.set_defaults(func=cmd_test)
 
     # ======================================================================================
     #                                       CALL
