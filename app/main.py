@@ -13,6 +13,18 @@ def cmd_generate_dataset(args: argparse.Namespace):
     generate_data.generate_dataset(CONFIG)
 
 
+def cmd_train_model(args: argparse.Namespace):
+    """Call read_extract_from_config_list with the given args."""
+    # CONFIG: Configuration = args_to_config(args)
+    ...
+
+
+def cmd_test_model(args: argparse.Namespace):
+    """Call read_extract_from_config_list with the given args."""
+    # CONFIG: Configuration = args_to_config(args)
+    ...
+
+
 # ======================================================================================
 #                                       ARGUMENTS
 # ======================================================================================
@@ -37,8 +49,23 @@ if __name__ == "__main__":
     p_generate.set_defaults(func=cmd_generate_dataset)
 
     # ======================================================================================
-    #                                       trains
+    #                                       train
     # ======================================================================================
+    p_train = subparsers.add_parser("train-model", help="Train model.")
+    p_train.add_argument("-m", "--max_samples", type=int, default=None, help="Max samples to load")
+    p_train.add_argument(
+        "-o", "--original_data_path", type=str, default=None, help="Path to the original data"
+    )
+    p_train.set_defaults(func=cmd_train_model)
+
+    # ======================================================================================
+    #                                       test
+    # ======================================================================================
+    p_test = subparsers.add_parser("test-model", help="Test model.")
+    # p_test.add_argument(
+    #     "-m", "--max_samples", type=int, default=None, help="Max samples to load"
+    # )
+    p_test.set_defaults(func=cmd_test_model)
 
     # ======================================================================================
     #                                       CALL
