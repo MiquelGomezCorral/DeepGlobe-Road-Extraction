@@ -4,9 +4,10 @@ import os
 from typing import Literal
 
 from PIL import Image
-from src.config import Configuration, PipeType
 from src.data import SampleImage, Transformation, split_image_into_grid
 from src.utils import load_image, split_seed
+
+from .pipelines import PipeType
 
 
 def create_base_images(sample_directory, output_directory):
@@ -101,7 +102,7 @@ def apply_transformation(image_in, truth_in, transformations, seed):
     return image_copy, truth_copy
 
 
-def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configuration):
+def apply_pipeline(sample: SampleImage, pipelines: PipeType, seed: int):
     """Apply transformation pipelines to a sample image and its ground truth.
 
     This function processes a sample point by applying a set of transformation
@@ -122,7 +123,8 @@ def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configurati
     image_in = load_image(image)
     truth_in = load_image(truth)
 
-    for i, (pipeline, seed) in enumerate(zip(pipelines, split_seed(CONFIG.seed))):
+    seeds = split_seed(seed)
+    for i, (pipeline, seed) in enumerate(zip(pipelines, seeds)):
         image_out, truth_out = apply_transformation(image_in, truth_in, pipeline, seed)
         truth_out = truth_out.convert("L")
 

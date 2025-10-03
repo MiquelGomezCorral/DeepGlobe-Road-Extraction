@@ -1,5 +1,5 @@
 """Pipelines definitions for image transformations and augmentations."""
-from src.data import Transformation
+from .image_transformation import Transformation
 
 PipeType = list[list[Transformation]]
 

@@ -60,7 +60,7 @@ def load_image(image_path: str, to_bw: bool = False) -> Image.Image | None:
         Image.Image | None: Loaded image or None if loading fails.
     """
     try:
-        img = Image.open(image_path) if to_bw else Image.open(image_path).convert("L")
+        img = Image.open(image_path) if not to_bw else Image.open(image_path).convert("L")
         return img
     except FileNotFoundError:
         print(f"Error: The file '{image_path}' does not exist.")
