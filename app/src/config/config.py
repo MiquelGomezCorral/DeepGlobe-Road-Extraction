@@ -19,6 +19,9 @@ class Configuration:
     seed: int = 42
     augmented: bool = False
     max_samples: int = None
+
+    val_split: float = 0.15
+    test_split: float = 0.15
     # ========================= PATHS ==========================
     MODELS_FOLDER: str = "../models"
     LOGS_FOLDER: str = "../logs"
@@ -26,21 +29,23 @@ class Configuration:
     DATA_FOLDER: str = "../data"
     DATA_BASIC_FOLDER: str = os.path.join(DATA_FOLDER, "basic")
     DATA_AUG_FOLDER: str = os.path.join(DATA_FOLDER, "augmented")
+    DATA_IMG_FOLDER_NAME: str = "images"
+    DATA_GT_FOLDER_NAME: str = "groundtruth"
 
     metadata_path: str = os.path.join(DATA_FOLDER, "metadata.csv")
     original_data_path: str = os.path.join(DATA_FOLDER, "raw", "original")
 
     train_folder: str = os.path.join(DATA_BASIC_FOLDER, "train")
-    train_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "train", "images")
-    train_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "train", "groundtruth")
+    train_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "train", DATA_IMG_FOLDER_NAME)
+    train_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "train", DATA_GT_FOLDER_NAME)
 
     val_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation")
-    val_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation", "images")
-    val_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation", "groundtruth")
+    val_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation", DATA_IMG_FOLDER_NAME)
+    val_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "validation", DATA_GT_FOLDER_NAME)
 
     test_folder: str = os.path.join(DATA_BASIC_FOLDER, "test")
-    test_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "test", "images")
-    test_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "test", "groundtruth")
+    test_img_folder: str = os.path.join(DATA_BASIC_FOLDER, "test", DATA_IMG_FOLDER_NAME)
+    test_gt_folder: str = os.path.join(DATA_BASIC_FOLDER, "test", DATA_GT_FOLDER_NAME)
 
     logs_path: str = os.path.join(LOGS_FOLDER, "log.log")
 
@@ -51,16 +56,22 @@ class Configuration:
 
         # ========================= PARTITION OF DATA ==========================
         self.train_folder = os.path.join(self.DATA_AUG_FOLDER, "train")
-        self.train_img_folder = os.path.join(self.DATA_AUG_FOLDER, "train", "images")
-        self.train_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "train", "groundtruth")
+        self.train_img_folder = os.path.join(
+            self.DATA_AUG_FOLDER, "train", self.DATA_IMG_FOLDER_NAME
+        )
+        self.train_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "train", self.DATA_GT_FOLDER_NAME)
 
         self.val_folder = os.path.join(self.DATA_AUG_FOLDER, "validation")
-        self.val_img_folder = os.path.join(self.DATA_AUG_FOLDER, "validation", "images")
-        self.val_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "validation", "groundtruth")
+        self.val_img_folder = os.path.join(
+            self.DATA_AUG_FOLDER, "validation", self.DATA_IMG_FOLDER_NAME
+        )
+        self.val_gt_folder = os.path.join(
+            self.DATA_AUG_FOLDER, "validation", self.DATA_GT_FOLDER_NAME
+        )
 
         self.test_folder = os.path.join(self.DATA_AUG_FOLDER, "test")
-        self.test_img_folder = os.path.join(self.DATA_AUG_FOLDER, "test", "images")
-        self.test_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "test", "groundtruth")
+        self.test_img_folder = os.path.join(self.DATA_AUG_FOLDER, "test", self.DATA_IMG_FOLDER_NAME)
+        self.test_gt_folder = os.path.join(self.DATA_AUG_FOLDER, "test", self.DATA_GT_FOLDER_NAME)
 
 
 def args_to_config(args: Namespace):

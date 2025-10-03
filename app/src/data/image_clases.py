@@ -134,6 +134,8 @@ class SampleImage:
     ):
         self.path_img_x = path_img_x
         self.path_img_y = path_img_y
+        self.img_x = None
+        self.img_y = None
 
         if load_images:
             self.get_images(keep_in_memory=keep_in_memory)
@@ -171,3 +173,24 @@ class SampleImage:
             self.img_y = img_y
 
         return img_x, img_y
+
+    def save_images(self, img_dir: str, gt_dir: str) -> None:
+        """Save both the input image and the ground truth to the specified directory.
+
+        Args:
+            dir (str): The directory where the images will be saved.
+        """
+        if self.img_x is None or self.img_y is None:
+            self.get_images(keep_in_memory=True)
+
+        base_name_x, base_name_y = self.get_names()
+
+        # Save images
+        self.img_x.save(os.path.join(img_dir, base_name_x))
+        self.img_y.save(os.path.join(gt_dir, base_name_y))
+
+        # Free memory
+        self.img_x.close()
+        self.img_y.close()
+        self.img_x = None
+        self.img_y = None

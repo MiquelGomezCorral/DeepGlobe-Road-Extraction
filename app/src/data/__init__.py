@@ -2,9 +2,8 @@
 
 Functions to manage, clean and process data.
 """
+from .image_clases import SampleImage, Transformation  # noqa: F401
 from .image_transformation import (  # noqa: F401
-    SampleImage,
-    Transformation,
     add_noise_to_image,
     add_random_circles,
     invert_colors,
