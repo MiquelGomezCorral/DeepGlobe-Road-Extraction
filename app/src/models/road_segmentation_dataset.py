@@ -39,7 +39,7 @@ class RoadSegmentationDataset(Dataset):
         ]
         self.N = len(self.sample_points)
         self.seeds = split_seed(seed=CONFIG.seed, n=self.N)
-        print(f"Dataset initialized with {self.N} samples from {root_dir}")
+        print(f" - Dataset initialized with {self.N} samples from {root_dir}")
 
     def __len__(self):
         """Return the total number of samples in the dataset."""
