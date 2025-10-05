@@ -53,6 +53,7 @@ def train_model(CONFIG: Configuration):
         logger=logger,
         accelerator="auto",
         devices="auto",
+        callbacks=[early_stop],
     )
 
     # ========================== ACTUAL TRAINING =====================================
@@ -61,7 +62,6 @@ def train_model(CONFIG: Configuration):
         model,
         train_dataloaders=train_dataloader,
         val_dataloaders=valid_dataloader,
-        callbacks=[early_stop],
     )
     t1 = time.time()
     print_time(sec=t1 - t0, n_files=len(train_dataloader), prefix=" - Training time")
