@@ -24,7 +24,8 @@ full_pipeline = [t[0] for t in single_pipelines]
 
 # Combine into dict for easy reference
 AUG_PIPELINES = {
+    "none": None,
     "single": single_pipelines,
-    "pairs": pair_pipelines,
-    "full": [full_pipeline],
+    "double": pair_pipelines,
+    "all": [full_pipeline],
 }

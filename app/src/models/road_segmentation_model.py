@@ -21,10 +21,25 @@ class RoadSegmentationModel(pl.LightningModule):
             classes=CONFIG.out_classes,
             **kwargs,
         )
-        self.loss_fn = smp.losses.DiceLoss(smp.losses.BINARY_MODE, from_logits=True)
         self.lr = CONFIG.learning_rate
         self.t_max = CONFIG.max_steps
         self.eta_min = CONFIG.learning_rate / 1000
+
+        # Select loss function
+        if CONFIG.loss_function == "DiceLoss":
+            self.loss_fn = smp.losses.DiceLoss(smp.losses.BINARY_MODE, from_logits=True)
+        elif CONFIG.loss_function == "BCEWithLogitsLoss":
+            self.loss_fn = torch.nn.BCEWithLogitsLoss()
+        elif CONFIG.loss_function == "BCEDice":
+            self.loss_fn = (
+                lambda pred, target: (
+                    torch.nn.BCEWithLogitsLoss()(pred, target)
+                    + smp.losses.DiceLoss(smp.losses.BINARY_MODE, from_logits=True)(pred, target)
+                )
+                / 2
+            )
+        else:
+            raise ValueError(f"Unknown loss function: {CONFIG.loss_function}")
 
     def forward(self, x):
         """Forward pass."""

@@ -61,10 +61,40 @@ if __name__ == "__main__":
         "-aug", "--augmentation_chance", type=float, default=None, help="Augmentation chance"
     )
 
+    # ============== Training options ==============
     p_train.add_argument(
-        "-arc", "--architecture", type=str, default=None, help="Model architecture"
+        "-arc",
+        "--architecture",
+        type=str,
+        choices=["Unet", "FPN", "Linknet", "PSPNet"],
+        required=True,
+        help="Model architecture",
     )
-    p_train.add_argument("-enc", "--encoder_name", type=str, default=None, help="Encoder name")
+    p_train.add_argument(
+        "-enc",
+        "--encoder_name",
+        type=str,
+        choices=["resnet18", "resnet34", "efficientnet-b0"],
+        required=True,
+        help="Encoder backbone",
+    )
+    p_train.add_argument(
+        "-loss",
+        "--loss_function",
+        type=str,
+        choices=["DiceLoss", "BCEWithLogitsLoss", "BCEDice"],
+        default="DiceLoss",
+        help="Loss function type",
+    )
+    p_train.add_argument(
+        "-augset",
+        "--augmentation_set",
+        type=str,
+        choices=["none", "simple", "double", "all"],
+        default="none",
+        help="Data augmentation level",
+    )
+
     p_train.set_defaults(func=cmd_train_model)
 
     # ======================================================================================
