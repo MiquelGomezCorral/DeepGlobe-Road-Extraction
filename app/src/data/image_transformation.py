@@ -329,16 +329,17 @@ def add_random_circles(image: Image.Image, seed: int):
     # Open the image
     img = image.copy()
     width, height = img.size
+    np.random.seed(seed)
 
     # Maximum circle diameter
     max_diameter = min(width, height) // 8
-
-    # Set the random seed for reproducibility
-    np.random.seed(seed)
     num_circles = np.random.randint(1, 8)
 
     # Create a drawing object
     draw = ImageDraw.Draw(img)
+    img_np = np.array(img)
+    mean_color = np.mean(img_np)
+    color = (mean_color,) * 3  # gray scale color
 
     # Generate and draw circles
     for _ in range(num_circles):
@@ -350,7 +351,7 @@ def add_random_circles(image: Image.Image, seed: int):
         y = np.random.randint(0, height - diameter)
 
         # Draw the circle
-        draw.ellipse([x, y, x + diameter, y + diameter], fill="black")
+        draw.ellipse([x, y, x + diameter, y + diameter], fill=color)
 
     return img
 

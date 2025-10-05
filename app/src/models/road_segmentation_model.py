@@ -15,7 +15,7 @@ class RoadSegmentationModel(pl.LightningModule):
     def __init__(self, CONFIG: Configuration, **kwargs):
         super().__init__()
         self.model = smp.create_model(
-            CONFIG.architecture,
+            arch=CONFIG.architecture,
             encoder_name=CONFIG.encoder_name,
             in_channels=CONFIG.in_channels,
             classes=CONFIG.out_classes,
