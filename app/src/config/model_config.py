@@ -14,7 +14,7 @@ class ModelConfiguration:
     This class contains all the configuration variables for the project.
     """
 
-    n_training_samples: int = None
+    max_samples: int = None
     epochs: int = 10
     batch_size: int = 4
     max_steps: int = 1000
@@ -23,13 +23,13 @@ class ModelConfiguration:
     in_channels: int = 3
     out_classes: int = 1
 
-    model_name: str = "Unet"
+    architecture: str = "Unet"
     encoder_name: str = "resnet34"
 
     def __post_init__(self):
         """Post-initialization."""
-        if self.n_training_samples is not None:
-            self.max_steps = self.epochs * (self.n_training_samples // self.batch_size)
+        if self.max_samples is not None:
+            self.max_steps = self.epochs * (self.max_samples // self.batch_size)
 
 
 def args_to_model_config(args: Namespace):
