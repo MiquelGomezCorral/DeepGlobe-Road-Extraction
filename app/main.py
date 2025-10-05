@@ -52,13 +52,6 @@ if __name__ == "__main__":
     p_generate.add_argument(
         "-m", "--max_samples", type=int, default=None, help="Max samples to load"
     )
-    p_generate.add_argument(
-        "-c",
-        "--copy_original",
-        action="store_false",
-        default=True,
-        help="Copy and split original data. Default to True, -c to set False",
-    )
     p_generate.set_defaults(func=cmd_generate_dataset)
 
     # ======================================================================================
@@ -70,6 +63,9 @@ if __name__ == "__main__":
     p_train.add_argument("-b", "--batch_size", type=int, default=None, help="Batch size")
     p_train.add_argument("-s", "--max_steps", type=int, default=None, help="Max steps")
     p_train.add_argument("-lr", "--learning_rate", type=float, default=None, help="Learning rate")
+    p_train.add_argument(
+        "-aug", "--augmentation_chance", type=float, default=None, help="Augmentation chance"
+    )
 
     p_train.add_argument(
         "-arc", "--architecture", type=str, default=None, help="Model architecture"

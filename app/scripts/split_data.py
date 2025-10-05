@@ -4,7 +4,7 @@ Script that generates a copy and an augmented version from a dataset.
 """
 from maikol_utils.print_utils import print_separator
 from src.config import Configuration
-from src.script_refactor import augment_data, save_splited_data, split_data
+from src.script_refactor import save_splited_data, split_data
 
 
 def generate_dataset(CONFIG: Configuration):
@@ -28,14 +28,10 @@ def generate_dataset(CONFIG: Configuration):
     # =================================================================
     #                           SAVE DATA
     # =================================================================
-    if CONFIG.copy_original:
-        print_separator("PREPEARING BASIC DATA", sep_type="LONG")
-        save_splited_data(CONFIG, train, val, test)
+    print_separator("SAVING DATA", sep_type="LONG")
+    save_splited_data(CONFIG, train, val, test)
 
     # =================================================================
     #                           AUGMENT DATA
     # =================================================================
-    print_separator("PREPEARING AUGMENTED DATA", sep_type="LONG")
-    augment_data(CONFIG, train, val, test)
-
-    print_separator("GENERATING DATASET", sep_type="DONE")
+    print_separator("DONE", sep_type="DONE")
