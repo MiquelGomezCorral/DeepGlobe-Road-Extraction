@@ -58,7 +58,7 @@ if __name__ == "__main__":
     p_train.add_argument("-s", "--max_steps", type=int, default=None, help="Max steps")
     p_train.add_argument("-lr", "--learning_rate", type=float, default=None, help="Learning rate")
     p_train.add_argument(
-        "-aug", "--augmentation_chance", type=float, default=None, help="Augmentation chance"
+        "-ac", "--augmentation_chance", type=float, default=None, help="Augmentation chance"
     )
 
     # ============== Training options ==============
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         "-augset",
         "--augmentation_set",
         type=str,
-        choices=["none", "simple", "double", "all"],
+        choices=["none", "single", "double", "all"],
         default="none",
         help="Data augmentation level",
     )

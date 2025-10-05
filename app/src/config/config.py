@@ -37,7 +37,7 @@ class Configuration:
     architecture: Literal["Unet", "FPN", "PSPNet"] = "Unet"
     encoder_name: Literal["resnet18", "resnet34"] = "resnet34"
     loss_function: Literal["DiceLoss", "BCEDice"] = "DiceLoss"
-    augset: Literal["none", "simple", "double", "all"] = "none"
+    augmentation_set: Literal["none", "single", "double", "all"] = "none"
 
     augmentation_chance: float = 0.75
     # ========================= PATHS ==========================
@@ -70,6 +70,7 @@ class Configuration:
 
     log_folder: str = os.path.join(LOGS_FOLDER, model_name)
     log_file: str = os.path.join(log_folder, f"{model_name}.log")
+    test_metrics_file: str = os.path.join(log_folder, "test_metrics.csv")
 
     def __post_init__(self):
         """Post-initialization."""
@@ -78,15 +79,15 @@ class Configuration:
 
         # ==================== MODEL NAME ====================
         self.model_name = (
-            f"log-ARC{self.architecture}"
-            f"-EN{self.encoder_name}"
-            f"-BS{self.batch_size}"
-            f"-EP{self.epochs}"
-            f"-LR{self.learning_rate}"
-            f"-AUG{self.augset}"
+            f"log-ARC_{self.architecture}"
+            f"-EN_{self.encoder_name}"
+            f"-BS_{self.batch_size}"
+            f"-EP_{self.epochs}"
+            f"-LR_{self.learning_rate}"
+            f"-AUG_{self.augmentation_set}"
         )
         if self.max_samples is not None:
-            self.model_name += f"-MS{self.max_samples}"
+            self.model_name += f"-MS_{self.max_samples}"
 
         # ==================== MODEL FOLDER ====================
         self.model_folder = os.path.join(self.MODELS_FOLDER, self.model_name)
@@ -95,6 +96,7 @@ class Configuration:
         # ==================== LOGS ====================
         self.log_folder = os.path.join(self.LOGS_FOLDER, self.model_name)
         self.log_file = os.path.join(self.log_folder, f"{self.model_name}.log")
+        self.test_metrics_file = os.path.join(self.log_folder, "test_metrics.csv")
 
         make_dirs(
             [
@@ -130,7 +132,7 @@ class Configuration:
         print_log(f" - Architecture:        {self.architecture}")
         print_log(f" - Encoder name:        {self.encoder_name}")
         print_log(f" - Loss function:       {self.loss_function}")
-        print_log(f" - Augmentation set:    {self.augset}")
+        print_log(f" - Augmentation set:    {self.augmentation_set}")
         print_log(f" - Augmentation chance: {self.augmentation_chance}")
 
 

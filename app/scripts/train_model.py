@@ -7,6 +7,7 @@ import time
 import pytorch_lightning as pl
 from maikol_utils.print_utils import print_log, print_separator
 from maikol_utils.time_tracker import print_time
+from pytorch_lightning.callbacks import EarlyStopping
 from pytorch_lightning.loggers import CSVLogger
 from src.config.config import Configuration
 from src.models import RoadSegmentationModel
@@ -25,7 +26,7 @@ def train_model(CONFIG: Configuration):
     # ====================================================================
     print_separator("TRAINING MODEL", sep_type="START")
     CONFIG.print_config()
-    logger = CSVLogger(CONFIG.log_folder, name=CONFIG.model_name)
+    logger = CSVLogger(CONFIG.LOGS_FOLDER, name=CONFIG.model_name)
 
     # ====================================================================
     #                             DATASET
@@ -41,7 +42,11 @@ def train_model(CONFIG: Configuration):
     model = RoadSegmentationModel(CONFIG)
     model = model.to(get_device())
 
-    t0 = time.time()
+    early_stop = EarlyStopping(
+        monitor="val_loss",  # metric to watch
+        patience=5,  # stop if no improvement after 5 checks
+        mode="min",
+    )
     trainer = pl.Trainer(
         max_epochs=CONFIG.epochs,
         log_every_n_steps=1,
@@ -49,13 +54,17 @@ def train_model(CONFIG: Configuration):
         accelerator="auto",
         devices="auto",
     )
+
+    # ========================== ACTUAL TRAINING =====================================
+    t0 = time.time()
     trainer.fit(
         model,
         train_dataloaders=train_dataloader,
         val_dataloaders=valid_dataloader,
+        callbacks=[early_stop],
     )
     t1 = time.time()
-    print_time(sec=t1 - t0, files=len(train_dataloader), prefix=" - Training time")
+    print_time(sec=t1 - t0, n_files=len(train_dataloader), prefix=" - Training time")
 
     print_log(f" - Saving model at {CONFIG.model_path}...")
     trainer.save_checkpoint(CONFIG.model_path)
@@ -65,8 +74,11 @@ def train_model(CONFIG: Configuration):
     # ====================================================================
     print_separator("TESTING MODEL", sep_type="LONG")
     test_metrics = trainer.validate(model, dataloaders=test_dataloader, verbose=False)
-    print_log(f" - Test metrics: {test_metrics[0]}")
-
+    print_log(f" - Test metrics: {test_metrics['val_loss']}")
     visualize_model_predictions(CONFIG, model, test_dataloader)
+
+    with open(CONFIG.metrics_file, "w") as f:
+        print(f" - Test metrics: {test_metrics['val_loss']}", file=f)
+        print_time(sec=t1 - t0, n_files=len(train_dataloader), prefix=" - Training time", file=f)
 
     print_separator("DONE!", sep_type="START")

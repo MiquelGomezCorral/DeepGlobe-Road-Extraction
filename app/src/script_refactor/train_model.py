@@ -27,7 +27,7 @@ def get_data_loaders(CONFIG: Configuration):
             train_dataloader, valid_dataloader, test_dataloader
     """
     train_dataset = RoadSegmentationDataset(
-        CONFIG.train_folder, CONFIG, AUG_PIPELINES[CONFIG.augset]
+        CONFIG.train_folder, CONFIG, AUG_PIPELINES[CONFIG.augmentation_set]
     )
     valid_dataset = RoadSegmentationDataset(CONFIG.val_folder, CONFIG)
     test_dataset = RoadSegmentationDataset(CONFIG.test_folder, CONFIG)
@@ -56,6 +56,7 @@ def visualize_model_predictions(
     test_dataloader: RoadSegmentationDataset,
     max_samples: int = 20,
     cols_per_row: int = 5,
+    show: bool = False,
 ):
     """Visualize model predictions on test dataset.
 
@@ -112,4 +113,5 @@ def visualize_model_predictions(
 
     plt.tight_layout()
     plt.savefig(f"{CONFIG.log_folder}/model_predictions.png")
-    plt.show()
+    if show:
+        plt.show()

@@ -4,16 +4,16 @@ set -e  # stop if any command fails
 cd app
 
 # Default short training params
-EPOCHS=3
+EPOCHS=2
 BATCH_SIZE=4
-MAX_SAMPLES=50
+MAX_SAMPLES=10
 LEARNING_RATE=0.001
-MAX_STEPS=50
+MAX_STEPS=10
 
 ARCHS=("Unet" "FPN" "PSPNet")
 ENCS=("resnet18" "resnet34")
 LOSSES=("DiceLoss" "BCEDice")
-AUGS=("none" "simple" "double" "all")
+AUGS=("none" "single" "double" "all")
 
 # Loop through all combinations
 for arc in "${ARCHS[@]}"; do
