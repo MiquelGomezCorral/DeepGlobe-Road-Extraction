@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e  # stop if any command fails
+
+cd app
+
+# Default short training params
+EPOCHS=3
+BATCH_SIZE=8
+MAX_SAMPLES=200
+LEARNING_RATE=0.001
+MAX_STEPS=50
+
+ARCHS=("Unet" "FPN" "Linknet" "PSPNet")
+ENCS=("resnet18" "resnet34" "efficientnet-b0")
+LOSSES=("DiceLoss" "BCEWithLogitsLoss" "BCEDice")
+AUGS=("none" "simple" "double" "all")
+
+# Loop through all combinations
+for arc in "${ARCHS[@]}"; do
+  for enc in "${ENCS[@]}"; do
+    for loss in "${LOSSES[@]}"; do
+      for aug in "${AUGS[@]}"; do
+        echo "🚀 Training with: $arc | $enc | $loss | $aug"
+        python main.py train-model \
+          -arc "$arc" \
+          -enc "$enc" \
+          -loss "$loss" \
+          -augset "$aug" \
+          -e "$EPOCHS" \
+          -b "$BATCH_SIZE" \
+          -s "$MAX_STEPS" \
+          -m "$MAX_SAMPLES" \
+          -lr "$LEARNING_RATE"
+      done
+    done
+  done
+done
+
+echo "✅ All experiments completed."
