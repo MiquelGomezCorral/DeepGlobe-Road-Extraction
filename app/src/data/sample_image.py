@@ -84,9 +84,12 @@ class SampleImage:
         if img_y is not None:
             img_y.save(os.path.join(gt_dir, base_name_y))
 
-        # Free memory
-        self.img_x.close()
-        self.img_y.close()
+        # Free memory only for images we store in the instance (if any)
+        if self.img_x is not None and hasattr(self.img_x, "close"):
+            self.img_x.close()
+        if self.img_y is not None and hasattr(self.img_y, "close"):
+            self.img_y.close()
+
         self.img_x = self.img_y = None
 
     def set_images(self, img_x: Image.Image, img_y: Image.Image) -> None:

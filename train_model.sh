@@ -5,8 +5,8 @@ cd app
 
 # Default short training params
 EPOCHS=3
-BATCH_SIZE=8
-MAX_SAMPLES=200
+BATCH_SIZE=4
+MAX_SAMPLES=50
 LEARNING_RATE=0.001
 MAX_STEPS=50
 

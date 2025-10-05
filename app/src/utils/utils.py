@@ -100,7 +100,9 @@ def load_image(image_path: str, to_bw: bool = False) -> Image.Image | None:
         # keep the underlying file open.
         with Image.open(image_path) as _img:
             if to_bw:
-                img = _img.convert("L")
+                # Convert to single-channel and return a copy so the underlying
+                # file descriptor is closed when exiting the context manager.
+                img = _img.convert("L").copy()
             else:
                 # Ensure color images are in RGB mode so downstream code that
                 # expects 3 channels (C, H, W) works reliably. copy() detaches

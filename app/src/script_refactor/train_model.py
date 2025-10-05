@@ -36,7 +36,7 @@ def get_data_loaders(CONFIG: Configuration):
     print_log(f" - Val samples:   {len(valid_dataset):8_}")
     print_log(f" - Test samples:  {len(test_dataset):8_}")
 
-    n_cpu = os.cpu_count()
+    n_cpu = max(os.cpu_count() // 2, 1)
     train_dataloader = DataLoader(
         train_dataset, batch_size=CONFIG.batch_size, shuffle=True, num_workers=n_cpu
     )

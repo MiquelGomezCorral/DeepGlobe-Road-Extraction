@@ -338,8 +338,12 @@ def add_random_circles(image: Image.Image, seed: int):
     # Create a drawing object
     draw = ImageDraw.Draw(img)
     img_np = np.array(img)
-    mean_color = np.mean(img_np)
-    color = (mean_color,) * 3  # gray scale color
+    mean_color = int(np.mean(img_np))
+    # Choose fill color according to image mode: for 'L' use single int, for 'RGB' tuple
+    if img.mode == "L":
+        color = mean_color
+    else:
+        color = (mean_color,) * len(img.getbands())
 
     # Generate and draw circles
     for _ in range(num_circles):
