@@ -33,11 +33,9 @@ class Transformation(Enum):
     MIRROR = ("_mir", lambda img_in, seed: mirror_image(img_in))
     SUB = ("_sub", lambda img_in, seed: random_subimage(img_in, seed))
 
-    SHUFFLE = ("_shu", lambda img_in, seed: shuffle_image(img_in, seed))
     CIRCLES = ("_cir", lambda img_in, seed: add_random_circles(img_in, seed))
     BRIGHTNESS = ("_bri", lambda img_in, seed: set_brightness(img_in, seed))
 
-    INVERT = ("_inv", lambda img_in, seed: invert_colors(img_in))
     SHIFT_COLOR = ("_shi", lambda img_in, seed: shift_color_towards_random(img_in, seed))
     NOISE = ("_noi", lambda img_in, seed: add_noise_to_image(img_in, seed))
 
@@ -175,7 +173,7 @@ def split_image_into_grid(image: Image.Image, n: int) -> list[Image.Image]:
 
 
 # ROTATION
-def rotate_image(image, seed, any_angle: bool = False):
+def rotate_image(image: Image.Image, seed: int, any_angle: bool = False):
     """Rotate image and crop to original size.
 
     Args:
@@ -208,7 +206,7 @@ def rotate_image(image, seed, any_angle: bool = False):
 
 
 # MIRROR (HORIZONTAL FLIP)
-def mirror_image(image):
+def mirror_image(image: Image.Image):
     """Mirror the content of an image (flips it horizontally).
 
     Args:
@@ -237,7 +235,7 @@ def mirror_image(image):
 
 
 # STRETCH
-def random_subimage(image, seed):
+def random_subimage(image: Image.Image, seed: int):
     """Get subimage of random size and position and scale to 400x400.
 
     Selects a random subimage from the input image using the given seed.
@@ -266,17 +264,16 @@ def random_subimage(image, seed):
 
     # Get image dimensions
     width, height = image.size
-
-    # Generate random subimage dimensions between 10 and 400
-    subimage_size = np.random.randint(10, 400)  # nosec B311
+    # Divide into 2^2
+    subimage_size = width // 2
 
     # Calculate the max allowable top-left corner coordinates
     max_x = width - subimage_size
     max_y = height - subimage_size
 
-    # Randomly select the top-left corner of the subimage
-    x = np.random.randint(0, max_x)  # nosec B311
-    y = np.random.randint(0, max_y)  # nosec B311
+    # Randomly select the corner of the subimage
+    x = np.random.randint(0, max_x)
+    y = np.random.randint(0, max_y)
 
     # Define the bounding box for the subimage
     box = (x, y, x + subimage_size, y + subimage_size)
@@ -284,82 +281,14 @@ def random_subimage(image, seed):
     # Crop the subimage from the original image
     subimage = image.crop(box)
 
-    # Resize the subimage to 400x400 pixels
-    subimage = subimage.resize((400, 400), Image.Resampling.LANCZOS)
+    # Resize the subimage original image size
+    subimage = subimage.resize((width, height), Image.Resampling.LANCZOS)
 
     return subimage
 
 
-# PUZZLE SHUFFLE
-def shuffle_image(image, seed):
-    """Divide image into n x n grid and shuffle.
-
-    Divides an image into an n x n grid, shuffles the pieces randomly with a given seed,
-    and reconstructs the shuffled image.
-
-    Args:
-        image (Image.Image): The input image to be shuffled.
-        seed (int): The seed for random shuffling. This ensures reproducibility if provided.
-
-    Returns:
-        Image.Image: The shuffled image as a PIL Image object.
-
-    Examples:
-        img_in = "data/images/satImage_0000001.png"  # Replace with your image file
-        truth_in = "data/groundtruth/satImage_0000001.png"  # Replace with your image file
-        n = 4                           # Number of divisions (4x4 grid)
-        seed = 42                       # Seed for reproducibility
-        out_dir_img = "data/exp_image"   # Replace with your desired output folder
-        out_dir_truth = "data/exp_truth"  # Replace with your desired output folder
-
-        # Call the function
-        shuffle_image(img_in, seed)
-        shuffle_image(truth_in, seed)
-    """
-    # Open the image
-    img = image.copy()
-    width, height = img.size
-
-    # Set the seed for reproducibility
-    np.random.seed(seed)
-    n = np.random.randint(2, 5)  # nosec B311
-
-    # Calculate the size of each grid cell
-    grid_width = width // n
-    grid_height = height // n
-
-    # Extract grid cells
-    grid_cells = []
-    for i in range(n):
-        for j in range(n):
-            left = j * grid_width
-            upper = i * grid_height
-            right = left + grid_width
-            lower = upper + grid_height
-            grid_cells.append(img.crop((left, upper, right, lower)))
-
-    # Set the random seed for reproducibility
-    if seed is not None:
-        np.random.seed(seed)
-
-    # Shuffle the grid cells
-    np.random.shuffle(grid_cells)
-
-    # Create a new blank image to reconstruct the shuffled image
-    shuffled_img = Image.new("RGB", (width, height))
-
-    # Place the shuffled cells back into the new image
-    for i in range(n):
-        for j in range(n):
-            left = j * grid_width
-            upper = i * grid_height
-            shuffled_img.paste(grid_cells.pop(0), (left, upper))
-
-    return shuffled_img
-
-
 # HOLES
-def add_random_circles(image, seed):
+def add_random_circles(image: Image.Image, seed: int):
     """Add black circles to an image at random positions with random diameters.
 
     Args:
@@ -390,7 +319,7 @@ def add_random_circles(image, seed):
 
     # Set the random seed for reproducibility
     np.random.seed(seed)
-    num_circles = np.random.randint(1, 32)  # nosec B311
+    num_circles = np.random.randint(1, 8)
 
     # Create a drawing object
     draw = ImageDraw.Draw(img)
@@ -398,11 +327,11 @@ def add_random_circles(image, seed):
     # Generate and draw circles
     for _ in range(num_circles):
         # Random diameter
-        diameter = np.random.randint(1, max_diameter)  # nosec B311
+        diameter = np.random.randint(1, max_diameter)
 
         # Random position ensuring the circle stays within bounds
-        x = np.random.randint(0, width - diameter)  # nosec B311
-        y = np.random.randint(0, height - diameter)  # nosec B311
+        x = np.random.randint(0, width - diameter)
+        y = np.random.randint(0, height - diameter)
 
         # Draw the circle
         draw.ellipse([x, y, x + diameter, y + diameter], fill="black")
@@ -411,7 +340,7 @@ def add_random_circles(image, seed):
 
 
 # BRIGHTNESS
-def set_brightness(image, seed):
+def set_brightness(image: Image.Image, seed: int):
     """Adjust the brightness of an image based on the input brightness level.
 
     Args:
@@ -435,7 +364,7 @@ def set_brightness(image, seed):
     """
     # Brightness
     np.random.seed(seed)
-    brightness_level = np.random.randint(0, 100)  # nosec B311
+    brightness_level = np.random.randint(25, 75)  # From 0 to 100
 
     # Open the image
     img = image.copy()
@@ -451,38 +380,8 @@ def set_brightness(image, seed):
     return adjusted_img
 
 
-# INVERT
-def invert_colors(image):
-    """
-    Inverts the colors of an image.
-
-    Args:
-        image (Image.Image): The input image to invert the colors of.
-
-    Returns:
-        Image.Image: The image with inverted colors as a PIL Image object.
-
-    Examples:
-        img_in = "data/images/satImage_0000001.png"  # Replace with your image file
-        truth_in = "data/groundtruth/satImage_0000001.png"  # Replace with your image file
-        out_dir_img = "data/exp_image"  # Replace with your desired output folder
-        out_dir_truth = "data/exp_truth"  # Replace with your desired output folder
-
-        # Call the function
-        invert_colors(img_in, out_dir_img, output_name="inverted_image.png")
-        invert_colors(truth_in, out_dir_truth, output_name="inverted_image.png")
-    """
-    # Open the image
-    img = image.copy()
-
-    # Invert colors
-    inverted_img = ImageOps.invert(img.convert("RGB"))
-
-    return inverted_img
-
-
 # COLORS
-def shift_color_towards_random(image, seed):
+def shift_color_towards_random(image: Image.Image, seed: int):
     """
     Shifts the color scale of the image towards a randomly generated color based on the seed.
 
@@ -504,40 +403,27 @@ def shift_color_towards_random(image, seed):
         shift_color_towards_random(img_in, seed, out_dir_img, output_name="color_shifted.png")
         #shift_color_towards_random(truth_in, seed, out_dir_truth, output_name="color_shifted.png")
     """
-    # Open the image
     img = image.copy()
 
-    # Set the random seed for reproducibility
-    np.random.seed(seed)
+    r_scale = np.random.uniform(0.8, 1.2)
+    g_scale = np.random.uniform(0.8, 1.2)
+    b_scale = np.random.uniform(0.8, 1.2)
 
-    # Generate a random color (R, G, B) where each channel is between 0 and 255
-    random_color = (
-        np.random.randint(0, 255),  # Red channel # nosec B311
-        np.random.randint(0, 255),  # Green channel # nosec B311
-        np.random.randint(0, 255),  # Blue channel # nosec B311
-    )
-
-    # Split the image into RGB channels
+    # Split channels
     r, g, b = img.split()
 
-    # Calculate the scaling factors to shift the color balance
-    r_scale = random_color[0] / 255.0
-    g_scale = random_color[1] / 255.0
-    b_scale = random_color[2] / 255.0
+    # Apply scaling and clip values to 0-255
+    r = r.point(lambda i: np.clip(i * r_scale, 0, 255))
+    g = g.point(lambda i: np.clip(i * g_scale, 0, 255))
+    b = b.point(lambda i: np.clip(i * b_scale, 0, 255))
 
-    # Apply the scaling factors to each color channel
-    r = r.point(lambda i: i * r_scale)
-    g = g.point(lambda i: i * g_scale)
-    b = b.point(lambda i: i * b_scale)
-
-    # Merge the modified channels back into an image
+    # Merge channels back
     shifted_img = Image.merge("RGB", (r, g, b))
-
     return shifted_img
 
 
 # NOISE
-def add_noise_to_image(image, seed):
+def add_noise_to_image(image: Image.Image, seed):
     """Add random noise to an image.
 
     Args:
@@ -562,12 +448,10 @@ def add_noise_to_image(image, seed):
     img_array = np.array(img)
 
     np.random.seed(seed)
-    noise_level = np.random.randint(5, 40)  # nosec B311
+    noise_level = np.random.randint(5, 40)
 
     # Generate random noise
-    noise = np.random.randint(
-        -noise_level, noise_level + 1, img_array.shape, dtype=np.int16
-    )  # nosec B311
+    noise = np.random.randint(-noise_level, noise_level + 1, img_array.shape, dtype=np.int16)
 
     # Add noise to the image and clip the values to keep them valid (0-255)
     noisy_img_array = np.clip(img_array + noise, 0, 255).astype(np.uint8)
@@ -583,6 +467,5 @@ VALID_GT_TRANSFORMATIONS = [
     Transformation.ROTATE,
     Transformation.MIRROR,
     Transformation.SUB,
-    Transformation.SHUFFLE,
     Transformation.CIRCLES,
 ]

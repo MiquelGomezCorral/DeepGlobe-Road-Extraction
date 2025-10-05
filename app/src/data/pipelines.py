@@ -10,9 +10,7 @@ single_pipelines = [
     [Transformation.ROTATE],
     [Transformation.MIRROR],
     [Transformation.SUB],
-    [Transformation.SHUFFLE],
     [Transformation.CIRCLES],
-    [Transformation.INVERT],
     [Transformation.SHIFT_COLOR],
     [Transformation.NOISE],
 ]

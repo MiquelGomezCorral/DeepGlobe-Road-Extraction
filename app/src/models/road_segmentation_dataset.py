@@ -54,7 +54,7 @@ class RoadSegmentationDataset(Dataset):
         if self.pipelines is not None and np.random.rand() < self.augmentation_chance:
             seed = self.seeds[idx]
             np.random.seed(seed)
-            pipe = np.random.choice(self.pipelines)
+            pipe = self.pipelines[np.random.randint(0, len(self.pipelines))]
 
             x, y = apply_pipeline(self.sample_points[idx], pipe, seed)
         else:
