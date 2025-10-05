@@ -71,6 +71,19 @@ def to_device(x, device=None):
         return x.cpu()
 
 
+def get_device():
+    """Get the available device (GPU or CPU).
+
+    Returns:
+        torch.device: The available device (GPU or CPU).
+    """
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
+    return device
+
+
 def load_image(image_path: str, to_bw: bool = False) -> Image.Image | None:
     """Load an image from a specified file path.
 
@@ -82,7 +95,17 @@ def load_image(image_path: str, to_bw: bool = False) -> Image.Image | None:
         Image.Image | None: Loaded image or None if loading fails.
     """
     try:
-        img = Image.open(image_path) if not to_bw else Image.open(image_path).convert("L")
+        # Open the file inside a context manager so the file descriptor is
+        # closed immediately. Return a copy/converted image that does not
+        # keep the underlying file open.
+        with Image.open(image_path) as _img:
+            if to_bw:
+                img = _img.convert("L")
+            else:
+                # copy() ensures the returned Image doesn't reference the
+                # opened file object which will be closed when exiting the
+                # context manager.
+                img = _img.copy()
         return img
     except FileNotFoundError:
         print(f"Error: The file '{image_path}' does not exist.")
