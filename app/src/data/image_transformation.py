@@ -188,8 +188,24 @@ def rotate_image(image: Image.Image, seed: int, any_angle: bool = False):
     img = image.copy()
     original_size = img.size
 
-    # Create a larger canvas with black background
-    larger_canvas = Image.new("RGB", img.size, (0, 0, 0))
+    # Create a larger canvas with a background matching the input image mode
+    # so that rotating a single-channel ground-truth (mode 'L') does not
+    # force it to become RGB. Choose an appropriate black/transparent fill
+    # depending on the mode.
+    if img.mode == "RGB":
+        bg_color = (0, 0, 0)
+    elif img.mode == "RGBA":
+        bg_color = (0, 0, 0, 0)
+    elif img.mode == "L":
+        bg_color = 0
+    else:
+        # Fallback: create a tuple of zeros matching number of bands, or 0
+        try:
+            bg_color = tuple([0] * len(img.getbands()))
+        except Exception:
+            bg_color = 0
+
+    larger_canvas = Image.new(img.mode, img.size, bg_color)
     larger_canvas.paste(img, (0, 0))
 
     # Set rotation angle

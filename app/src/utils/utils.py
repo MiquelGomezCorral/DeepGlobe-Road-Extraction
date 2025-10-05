@@ -102,10 +102,11 @@ def load_image(image_path: str, to_bw: bool = False) -> Image.Image | None:
             if to_bw:
                 img = _img.convert("L")
             else:
-                # copy() ensures the returned Image doesn't reference the
-                # opened file object which will be closed when exiting the
-                # context manager.
-                img = _img.copy()
+                # Ensure color images are in RGB mode so downstream code that
+                # expects 3 channels (C, H, W) works reliably. copy() detaches
+                # the returned Image from the underlying file so the file
+                # descriptor is closed when exiting the context manager.
+                img = _img.convert("RGB").copy()
         return img
     except FileNotFoundError:
         print(f"Error: The file '{image_path}' does not exist.")

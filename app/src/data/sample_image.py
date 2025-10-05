@@ -70,14 +70,19 @@ class SampleImage:
         Args:
             dir (str): The directory where the images will be saved.
         """
+        # Ensure images are present (load temporardily if necessary)
         if self.img_x is None or self.img_y is None:
-            self.get_images(keep_in_memory=False)
+            img_x, img_y = self.get_images(keep_in_memory=False)
+        else:
+            img_x, img_y = self.img_x, self.img_y
 
         base_name_x, base_name_y = self.get_names()
 
-        # Save images
-        self.img_x.save(os.path.join(img_dir, base_name_x))
-        self.img_y.save(os.path.join(gt_dir, base_name_y))
+        # Save images (ensure image objects are valid)
+        if img_x is not None:
+            img_x.save(os.path.join(img_dir, base_name_x))
+        if img_y is not None:
+            img_y.save(os.path.join(gt_dir, base_name_y))
 
         # Free memory
         self.img_x.close()
