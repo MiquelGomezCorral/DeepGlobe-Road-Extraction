@@ -1,7 +1,7 @@
 """Image augmentation and transformation utilities."""
 
 from PIL import Image
-from src.config import ModelConfiguration
+from src.config import Configuration
 from src.utils import get_data_paths_from_config, split_seed
 
 from .image_transformation import VALID_GT_TRANSFORMATIONS, Transformation
@@ -41,7 +41,7 @@ def apply_transformation(
     return img_copy, gt_copy
 
 
-def apply_pipelines(sample: SampleImage, pipelines: PipeType, M_CONFIG: ModelConfiguration):
+def apply_pipelines(sample: SampleImage, pipelines: PipeType, CONFIG: Configuration):
     """Apply transformation pipelines to a sample image and its ground truth.
 
     This function processes a sample point by applying a set of transformation
@@ -50,7 +50,7 @@ def apply_pipelines(sample: SampleImage, pipelines: PipeType, M_CONFIG: ModelCon
     Args:
         sample (SampleImage): The sample containing paths to an image and its ground truth.
         pipelines (list): List of transformation pipelines to apply.
-        M_CONFIG (Configuration): Configuration settings including seeds and other parameters.
+        CONFIG (Configuration): Configuration settings including seeds and other parameters.
 
     Returns:
         None: The transformed images and ground truths are saved to the specified directory.
@@ -58,9 +58,9 @@ def apply_pipelines(sample: SampleImage, pipelines: PipeType, M_CONFIG: ModelCon
     """
     img, gt = sample.get_images()
     img_name, gt_name = sample.get_names()
-    img_folder, gt_folder = get_data_paths_from_config(M_CONFIG)
+    img_folder, gt_folder = get_data_paths_from_config(CONFIG)
 
-    seeds = split_seed(M_CONFIG.seed, len(pipelines))
+    seeds = split_seed(CONFIG.seed, len(pipelines))
     for i, (pipeline, seed) in enumerate(zip(pipelines, seeds)):
         img_aug, gt_aug = apply_transformation(img, gt, pipeline, seed)
 

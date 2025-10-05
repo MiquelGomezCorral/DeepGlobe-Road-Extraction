@@ -7,7 +7,6 @@ import dataclasses
 import os
 from argparse import Namespace
 from dataclasses import dataclass
-from typing import Literal
 
 from maikol_utils.file_utils import make_dirs
 
@@ -19,14 +18,24 @@ class Configuration:
     This class contains all the configuration variables for the project.
     """
 
+    # ========================= MODEL PARAMETERS ==========================
     seed: int = 42
     max_samples: int = None
-    copy_original: bool = True
-    augmented_samples_per_image: int = 3
-
     val_split: float = 0.15
     test_split: float = 0.15
-    partition: Literal["train", "val", "test"] = "train"
+
+    epochs: int = 10
+    batch_size: int = 4
+    max_steps: int = 1000
+    learning_rate: float = 0.0001
+
+    in_channels: int = 3
+    out_classes: int = 1
+
+    architecture: str = "Unet"
+    encoder_name: str = "resnet34"
+
+    augmentation_chance: float = 0.75
     # ========================= PATHS ==========================
     MODELS_FOLDER: str = "../models"
     LOGS_FOLDER: str = "../logs"
@@ -55,6 +64,9 @@ class Configuration:
 
     def __post_init__(self):
         """Post-initialization."""
+        if self.max_samples is not None:
+            self.max_steps = self.epochs * (self.max_samples // self.batch_size)
+
         make_dirs(
             [
                 self.train_img_folder,

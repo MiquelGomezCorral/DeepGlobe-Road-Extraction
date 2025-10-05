@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from maikol_utils.file_utils import list_dir_files
-from src.config import ModelConfiguration
+from src.config import Configuration
 from src.data import PipeType, SampleImage, apply_pipeline
 from src.utils import split_seed
 from torch.utils.data import Dataset
@@ -20,10 +20,8 @@ class RoadSegmentationDataset(Dataset):
     data augmentation pipelines, and prepares the data for training a segmentation model.
     """
 
-    def __init__(
-        self, root_dir: str, M_CONFIG: ModelConfiguration, pipelines: list[PipeType] = None
-    ):
-        self.augmentation_chance = M_CONFIG.augmentation_chance
+    def __init__(self, root_dir: str, CONFIG: Configuration, pipelines: list[PipeType] = None):
+        self.augmentation_chance = CONFIG.augmentation_chance
         self.pipelines = pipelines
 
         original_files, n = list_dir_files(
@@ -32,15 +30,15 @@ class RoadSegmentationDataset(Dataset):
             absolute_path=True,
             recursive=True,
         )
-        path_images_X = [img for img in original_files if "_sat" in img][: M_CONFIG.max_samples]
-        path_images_Y = [img for img in original_files if "_mask" in img][: M_CONFIG.max_samples]
+        path_images_X = [img for img in original_files if "_sat" in img][: CONFIG.max_samples]
+        path_images_Y = [img for img in original_files if "_mask" in img][: CONFIG.max_samples]
 
         self.sample_points: list[SampleImage] = [
             SampleImage(path_img_x, path_img_y)
             for path_img_x, path_img_y in zip(path_images_X, path_images_Y)
         ]
         self.N = len(self.sample_points)
-        self.seeds = split_seed(seed=M_CONFIG.seed, n=self.N)
+        self.seeds = split_seed(seed=CONFIG.seed, n=self.N)
         print(f"Dataset initialized with {self.N} samples from {root_dir}")
 
     def __len__(self):

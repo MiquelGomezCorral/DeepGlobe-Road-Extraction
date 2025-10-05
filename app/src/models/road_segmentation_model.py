@@ -5,26 +5,26 @@ Road Segmentation Model Lightning wrapper for Segmentation Models PyTorch.
 import pytorch_lightning as pl
 import segmentation_models_pytorch as smp
 import torch
-from src.config import ModelConfiguration
+from src.config import Configuration
 from torch.optim import lr_scheduler
 
 
 class RoadSegmentationModel(pl.LightningModule):
     """Road Segmentation Model Lightning wrapper for Segmentation Models PyTorch."""
 
-    def __init__(self, M_CONFIG: ModelConfiguration, **kwargs):
+    def __init__(self, CONFIG: Configuration, **kwargs):
         super().__init__()
         self.model = smp.create_model(
-            M_CONFIG.architecture,
-            encoder_name=M_CONFIG.encoder_name,
-            in_channels=M_CONFIG.in_channels,
-            classes=M_CONFIG.out_classes,
+            CONFIG.architecture,
+            encoder_name=CONFIG.encoder_name,
+            in_channels=CONFIG.in_channels,
+            classes=CONFIG.out_classes,
             **kwargs,
         )
         self.loss_fn = smp.losses.DiceLoss(smp.losses.BINARY_MODE, from_logits=True)
-        self.lr = M_CONFIG.learning_rate
-        self.t_max = M_CONFIG.max_steps
-        self.eta_min = M_CONFIG.learning_rate / 1000
+        self.lr = CONFIG.learning_rate
+        self.t_max = CONFIG.max_steps
+        self.eta_min = CONFIG.learning_rate / 1000
 
     def forward(self, x):
         """Forward pass."""

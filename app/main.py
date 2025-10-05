@@ -4,12 +4,7 @@ import argparse
 
 import dotenv
 from scripts import generate_dataset, train_model
-from src.config import (
-    Configuration,
-    ModelConfiguration,
-    args_to_config,
-    args_to_model_config,
-)
+from src.config import Configuration, args_to_config
 
 
 def cmd_generate_dataset(args: argparse.Namespace):
@@ -21,8 +16,7 @@ def cmd_generate_dataset(args: argparse.Namespace):
 def cmd_train_model(args: argparse.Namespace):
     """Call read_extract_from_config_list with the given args."""
     CONFIG: Configuration = args_to_config(args)
-    M_CONFIG: ModelConfiguration = args_to_model_config(args)
-    train_model(CONFIG, M_CONFIG)
+    train_model(CONFIG)
 
 
 def cmd_test_model(args: argparse.Namespace):
