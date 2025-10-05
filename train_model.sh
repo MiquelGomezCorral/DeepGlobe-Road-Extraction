@@ -10,9 +10,9 @@ MAX_SAMPLES=200
 LEARNING_RATE=0.001
 MAX_STEPS=50
 
-ARCHS=("Unet" "FPN" "Linknet" "PSPNet")
-ENCS=("resnet18" "resnet34" "efficientnet-b0")
-LOSSES=("DiceLoss" "BCEWithLogitsLoss" "BCEDice")
+ARCHS=("Unet" "FPN" "PSPNet")
+ENCS=("resnet18" "resnet34")
+LOSSES=("DiceLoss" "BCEDice")
 AUGS=("none" "simple" "double" "all")
 
 # Loop through all combinations

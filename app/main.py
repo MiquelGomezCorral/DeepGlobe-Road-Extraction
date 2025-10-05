@@ -66,7 +66,7 @@ if __name__ == "__main__":
         "-arc",
         "--architecture",
         type=str,
-        choices=["Unet", "FPN", "Linknet", "PSPNet"],
+        choices=["Unet", "FPN", "PSPNet"],
         required=True,
         help="Model architecture",
     )
@@ -74,7 +74,7 @@ if __name__ == "__main__":
         "-enc",
         "--encoder_name",
         type=str,
-        choices=["resnet18", "resnet34", "efficientnet-b0"],
+        choices=["resnet18", "resnet34"],
         required=True,
         help="Encoder backbone",
     )
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         "-loss",
         "--loss_function",
         type=str,
-        choices=["DiceLoss", "BCEWithLogitsLoss", "BCEDice"],
+        choices=["DiceLoss", "BCEDice"],
         default="DiceLoss",
         help="Loss function type",
     )
