@@ -1,7 +1,7 @@
 """Image augmentation and transformation utilities."""
 
 from PIL import Image
-from src.config import Configuration
+from src.config import ModelConfiguration
 from src.utils import get_data_paths_from_config, split_seed
 
 from .image_transformation import VALID_GT_TRANSFORMATIONS, Transformation
@@ -41,7 +41,7 @@ def apply_transformation(
     return img_copy, gt_copy
 
 
-def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configuration):
+def apply_pipelines(sample: SampleImage, pipelines: PipeType, M_CONFIG: ModelConfiguration):
     """Apply transformation pipelines to a sample image and its ground truth.
 
     This function processes a sample point by applying a set of transformation
@@ -50,9 +50,7 @@ def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configurati
     Args:
         sample (SampleImage): The sample containing paths to an image and its ground truth.
         pipelines (list): List of transformation pipelines to apply.
-        base_index (int): Base index for naming the output files.
-        out_directory (str): Path to the output directory.
-        settings (Settings): Configuration settings including seeds and other parameters.
+        M_CONFIG (Configuration): Configuration settings including seeds and other parameters.
 
     Returns:
         None: The transformed images and ground truths are saved to the specified directory.
@@ -60,12 +58,11 @@ def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configurati
     """
     img, gt = sample.get_images()
     img_name, gt_name = sample.get_names()
-    img_folder, gt_folder = get_data_paths_from_config(CONFIG)
+    img_folder, gt_folder = get_data_paths_from_config(M_CONFIG)
 
-    seeds = split_seed(CONFIG.seed, len(pipelines))
+    seeds = split_seed(M_CONFIG.seed, len(pipelines))
     for i, (pipeline, seed) in enumerate(zip(pipelines, seeds)):
         img_aug, gt_aug = apply_transformation(img, gt, pipeline, seed)
-        gt_aug = gt_aug.convert("L")
 
         new_name_x = f"{img_name}_{i}_{Transformation.pipe_to_name(pipeline)}.png"
         new_name_y = f"{gt_name}_{i}_{Transformation.pipe_to_name(pipeline)}.png"
@@ -76,3 +73,21 @@ def apply_pipeline(sample: SampleImage, pipelines: PipeType, CONFIG: Configurati
         )
         aug_sample.set_images(img_aug, gt_aug)
         aug_sample.save_images(img_folder, gt_folder)
+
+
+def apply_pipeline(sample: SampleImage, pipeline: PipeType, seed: int):
+    """Apply transformation pipeline to a sample image and its ground truth.
+
+    Args:
+        sample (SampleImage): The sample containing paths to an image and its ground truth.
+        pipelines (list): List of transformation pipelines to apply.
+
+    Returns:
+        None: The transformed images and ground truths are saved to the specified directory.
+
+    """
+    img, gt = sample.get_images(keep_in_memory=False)
+
+    img_aug, gt_aug = apply_transformation(img, gt, pipeline, seed)
+
+    return img_aug, gt_aug

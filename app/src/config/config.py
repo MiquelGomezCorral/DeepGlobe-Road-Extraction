@@ -21,7 +21,6 @@ class Configuration:
 
     seed: int = 42
     max_samples: int = None
-    augmented: bool = False
     copy_original: bool = True
     augmented_samples_per_image: int = 3
 
@@ -34,7 +33,6 @@ class Configuration:
     TEMP_FOLDER: str = "../temp"
     DATA_FOLDER: str = "../data"
     DATA_BASIC_FOLDER: str = os.path.join(DATA_FOLDER, "basic")
-    DATA_AUG_FOLDER: str = os.path.join(DATA_FOLDER, "augmented")
     DATA_IMG_FOLDER_NAME: str = "images"
     DATA_GT_FOLDER_NAME: str = "groundtruth"
 
@@ -57,34 +55,6 @@ class Configuration:
 
     def __post_init__(self):
         """Post-initialization."""
-        if self.augmented:
-            # ========================= PARTITION OF DATA ==========================
-            self.train_folder = os.path.join(self.DATA_AUG_FOLDER, "train")
-            self.train_img_folder = os.path.join(
-                self.DATA_AUG_FOLDER, "train", self.DATA_IMG_FOLDER_NAME
-            )
-            self.train_gt_folder = os.path.join(
-                self.DATA_AUG_FOLDER, "train", self.DATA_GT_FOLDER_NAME
-            )
-
-            self.val_folder = os.path.join(self.DATA_AUG_FOLDER, "validation")
-            self.val_img_folder = os.path.join(
-                self.DATA_AUG_FOLDER, "validation", self.DATA_IMG_FOLDER_NAME
-            )
-            self.val_gt_folder = os.path.join(
-                self.DATA_AUG_FOLDER, "validation", self.DATA_GT_FOLDER_NAME
-            )
-
-            self.test_folder = os.path.join(self.DATA_AUG_FOLDER, "test")
-            self.test_img_folder = os.path.join(
-                self.DATA_AUG_FOLDER, "test", self.DATA_IMG_FOLDER_NAME
-            )
-            self.test_gt_folder = os.path.join(
-                self.DATA_AUG_FOLDER, "test", self.DATA_GT_FOLDER_NAME
-            )
-            # =====================================================================
-        # END IF
-
         make_dirs(
             [
                 self.train_img_folder,

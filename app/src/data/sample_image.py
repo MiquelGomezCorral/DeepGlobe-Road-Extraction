@@ -46,7 +46,7 @@ class SampleImage:
         """
         return os.path.basename(self.path_img_x), os.path.basename(self.path_img_y)
 
-    def get_images(self, keep_in_memory: bool = True) -> tuple[Image.Image, Image.Image]:
+    def get_images(self, keep_in_memory: bool = False) -> tuple[Image.Image, Image.Image]:
         """Retrieve both the input image and the ground truth as a tuple.
 
         Returns:
@@ -71,7 +71,7 @@ class SampleImage:
             dir (str): The directory where the images will be saved.
         """
         if self.img_x is None or self.img_y is None:
-            self.get_images(keep_in_memory=True)
+            self.get_images(keep_in_memory=False)
 
         base_name_x, base_name_y = self.get_names()
 

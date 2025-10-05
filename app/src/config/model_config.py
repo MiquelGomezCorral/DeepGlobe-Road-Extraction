@@ -14,6 +14,7 @@ class ModelConfiguration:
     This class contains all the configuration variables for the project.
     """
 
+    seed: int = 42
     max_samples: int = None
     epochs: int = 10
     batch_size: int = 4
@@ -25,6 +26,8 @@ class ModelConfiguration:
 
     architecture: str = "Unet"
     encoder_name: str = "resnet34"
+
+    augmentation_chance: float = 0.75
 
     def __post_init__(self):
         """Post-initialization."""

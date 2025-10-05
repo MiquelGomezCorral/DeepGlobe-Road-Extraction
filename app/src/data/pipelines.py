@@ -25,7 +25,7 @@ full_pipeline = [t[0] for t in single_pipelines]
 
 
 # Combine into dict for easy reference
-augmentation_experiments = {
+AUG_PIPELINES = {
     "single": single_pipelines,
     "pairs": pair_pipelines,
     "full": [full_pipeline],
