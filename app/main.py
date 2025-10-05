@@ -51,7 +51,7 @@ if __name__ == "__main__":
         "--copy_original",
         action="store_false",
         default=True,
-        help="Copy and split original data",
+        help="Copy and split original data. Default to True, -c to set False",
     )
     p_generate.set_defaults(func=cmd_generate_dataset)
 
