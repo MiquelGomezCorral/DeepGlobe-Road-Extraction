@@ -62,6 +62,7 @@ def train_model(CONFIG: Configuration):
         model,
         train_dataloaders=train_dataloader,
         val_dataloaders=valid_dataloader,
+        ckpt_path=CONFIG.model_path,
     )
     t1 = time.time()
     print_time(sec=t1 - t0, n_files=len(train_dataloader), prefix=" - Training time")
@@ -74,11 +75,13 @@ def train_model(CONFIG: Configuration):
     # ====================================================================
     print_separator("TESTING MODEL", sep_type="LONG")
     test_metrics = trainer.validate(model, dataloaders=test_dataloader, verbose=False)
-    print_log(f" - Test metrics: {test_metrics['val_loss']}")
+    print_log(f" - Test metrics: {test_metrics}")
     visualize_model_predictions(CONFIG, model, test_dataloader)
 
-    with open(CONFIG.metrics_file, "w") as f:
-        print(f" - Test metrics: {test_metrics['val_loss']}", file=f)
-        print_time(sec=t1 - t0, n_files=len(train_dataloader), prefix=" - Training time", file=f)
+    with open(CONFIG.test_metrics_file, "w") as f:
+        print(f" - Test metrics: {test_metrics}", file=f)
+        print_time(
+            sec=t1 - t0, n_files=len(train_dataloader), prefix=" - Training time", out_file=f
+        )
 
     print_separator("DONE!", sep_type="START")
