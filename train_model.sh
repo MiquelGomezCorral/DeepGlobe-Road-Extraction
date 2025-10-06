@@ -5,7 +5,7 @@ cd app
 
 # Default training params
 EPOCHS=100
-BATCH_SIZE=8
+BATCH_SIZE=4
 MAX_SAMPLES=""  # leave empty to not pass
 LEARNING_RATE=0.0001
 MAX_STEPS=1000

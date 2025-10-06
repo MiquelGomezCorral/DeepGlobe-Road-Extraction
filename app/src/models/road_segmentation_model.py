@@ -28,6 +28,8 @@ class RoadSegmentationModel(pl.LightningModule):
         # Select loss function
         if CONFIG.loss_function == "DiceLoss":
             self.loss_fn = smp.losses.DiceLoss(smp.losses.BINARY_MODE, from_logits=True)
+        elif CONFIG.loss_function == "BCEWithLogitsLoss":
+            self.loss_fn = torch.nn.BCEWithLogitsLoss()
         elif CONFIG.loss_function == "BCEDice":
             self.loss_fn = (
                 lambda pred, target: (

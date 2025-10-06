@@ -7,12 +7,32 @@ import time
 import pytorch_lightning as pl
 from maikol_utils.print_utils import print_log, print_separator
 from maikol_utils.time_tracker import print_time
-from pytorch_lightning.callbacks import EarlyStopping
+from pytorch_lightning.callbacks import Callback, EarlyStopping
 from pytorch_lightning.loggers import CSVLogger
 from src.config.config import Configuration
 from src.models import RoadSegmentationModel
 from src.script_refactor import get_data_loaders, visualize_model_predictions
 from src.utils import get_device
+
+
+class VisualizePredictionsCallback(Callback):
+    """Callback to visualize model predictions at the end of each epoch."""
+
+    def __init__(self, CONFIG, test_dataloader):
+        super().__init__()
+        self.CONFIG = CONFIG
+        self.test_dataloader = test_dataloader
+
+    def on_train_epoch_end(self, trainer, pl_module):
+        """Visualize model predictions at the end of each epoch."""
+        visualize_model_predictions(self.CONFIG, pl_module, self.test_dataloader)
+
+
+early_stop = EarlyStopping(
+    monitor="val_loss",  # metric to watch
+    patience=5,  # stop if no improvement after 5 checks
+    mode="min",
+)
 
 
 def train_model(CONFIG: Configuration):
@@ -42,18 +62,14 @@ def train_model(CONFIG: Configuration):
     model = RoadSegmentationModel(CONFIG)
     model = model.to(get_device())
 
-    early_stop = EarlyStopping(
-        monitor="val_loss",  # metric to watch
-        patience=5,  # stop if no improvement after 5 checks
-        mode="min",
-    )
     trainer = pl.Trainer(
         max_epochs=CONFIG.epochs,
         log_every_n_steps=1,
         logger=logger,
-        accelerator="auto",
-        devices="auto",
-        callbacks=[early_stop],
+        accelerator="gpu",
+        devices=1,
+        precision="16-mixed",
+        callbacks=[early_stop, VisualizePredictionsCallback(CONFIG, test_dataloader)],
     )
 
     # Resume from checkpoint if exists
