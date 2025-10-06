@@ -56,13 +56,20 @@ def train_model(CONFIG: Configuration):
         callbacks=[early_stop],
     )
 
+    # Resume from checkpoint if exists
+    # ckpt_path = CONFIG.model_path
+    # if os.path.exists(ckpt_path):
+    #     print(f"⏯ Resuming from checkpoint: {ckpt_path}")
+    # else:
+    #     ckpt_path = None
+    #     print("▶ No checkpoint found, starting from scratch.")
     # ========================== ACTUAL TRAINING =====================================
     t0 = time.time()
     trainer.fit(
         model,
         train_dataloaders=train_dataloader,
         val_dataloaders=valid_dataloader,
-        ckpt_path=CONFIG.model_path,
+        # ckpt_path=CONFIG.model_path,
     )
     t1 = time.time()
     print_time(sec=t1 - t0, n_files=len(train_dataloader), prefix=" - Training time")
