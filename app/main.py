@@ -66,7 +66,7 @@ if __name__ == "__main__":
         "-arc",
         "--architecture",
         type=str,
-        choices=["Unet", "FPN", "Linknet", "PSPNet"],
+        choices=["Unet", "FPN", "Linknet", "PSPNet", "ViT"],
         required=True,
         help="Model architecture",
     )

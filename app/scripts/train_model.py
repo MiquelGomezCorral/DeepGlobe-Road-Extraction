@@ -10,7 +10,7 @@ from maikol_utils.time_tracker import print_time
 from pytorch_lightning.callbacks import Callback, EarlyStopping
 from pytorch_lightning.loggers import CSVLogger
 from src.config.config import Configuration
-from src.models import RoadSegmentationModel
+from src.models import RoadSegmentationModel, RoadSegmentationModelVIT
 from src.script_refactor import get_data_loaders, visualize_model_predictions
 from src.utils import get_device
 
@@ -59,7 +59,10 @@ def train_model(CONFIG: Configuration):
     # ====================================================================
     print_separator("TRAINING MODEL", sep_type="LONG")
     print_log(" - Getting model...")
-    model = RoadSegmentationModel(CONFIG)
+    if CONFIG.architecture == "ViT":
+        model = RoadSegmentationModelVIT(CONFIG)
+    else:
+        model = RoadSegmentationModel(CONFIG)
     model = model.to(get_device())
 
     trainer = pl.Trainer(
@@ -79,6 +82,7 @@ def train_model(CONFIG: Configuration):
     # else:
     #     ckpt_path = None
     #     print("▶ No checkpoint found, starting from scratch.")
+
     # ========================== ACTUAL TRAINING =====================================
     t0 = time.time()
     trainer.fit(

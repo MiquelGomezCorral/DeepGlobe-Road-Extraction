@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e  # stop if any command fails
+# set -e  # stop if any command fails
 
 cd app
 
@@ -10,9 +10,9 @@ MAX_SAMPLES=""  # leave empty to not pass
 LEARNING_RATE=0.0001
 MAX_STEPS=1000
 
-ARCHS=("Unet" "FPN" "PSPNet")
-ENCS=("resnet18" "resnet34")
-LOSSES=("DiceLoss" "BCEDice")
+ARCHS=("Unet" "FPN" "PSPNet" "Linknet")
+ENCS=("resnet18" "resnet34" "efficientnet-b0")
+LOSSES=("DiceLoss" "BCEWithLogitsLoss" "BCEDice")
 AUGS=("none" "single" "double" "all")
 
 # Loop through all combinations

@@ -34,7 +34,7 @@ class Configuration:
     in_channels: int = 3
     out_classes: int = 1
 
-    architecture: Literal["Unet", "FPN", "Linknet", "PSPNet"] = "Unet"
+    architecture: Literal["Unet", "FPN", "Linknet", "PSPNet", "ViT"] = "Unet"
     encoder_name: Literal["resnet18", "resnet34", "efficientnet-b0"] = "resnet34"
     loss_function: Literal["DiceLoss", "BCEDice"] = "DiceLoss"
     augmentation_set: Literal["none", "single", "double", "all"] = "none"
