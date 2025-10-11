@@ -34,4 +34,4 @@ def generate_dataset(CONFIG: Configuration):
     # =================================================================
     #                           AUGMENT DATA
     # =================================================================
-    print_separator("DONE", sep_type="DONE")
+    print_separator("DONE", sep_type="START")
