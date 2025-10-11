@@ -11,3 +11,7 @@ torchvision==0.23.0
 uv==0.8.22
 scikit-learn==1.7.2
 tqdm==4.67.1
+transformers==4.57.0
+segmentation-models-pytorch==0.5.0
+pytorch-lightning==2.5.5
+matplotlib==3.10.7
