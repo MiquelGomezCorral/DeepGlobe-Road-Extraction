@@ -30,7 +30,7 @@ class VisualizePredictionsCallback(Callback):
 
 early_stop = EarlyStopping(
     monitor="val_loss",  # metric to watch
-    patience=5,  # stop if no improvement after 5 checks
+    patience=Configuration.patience,  # stop if no improvement after 3 checks
     mode="min",
 )
 

@@ -10,8 +10,8 @@ MAX_SAMPLES=""  # leave empty to not pass
 LEARNING_RATE=0.0001
 MAX_STEPS=1000
 
-ARCHS=("Unet" "FPN" "PSPNet" "Linknet")
-ENCS=("resnet18" "resnet34" "efficientnet-b0")
+ARCHS=("Unet" "FPN" "PSPNet")
+ENCS=("resnet18") # "resnet34")
 LOSSES=("DiceLoss" "BCEWithLogitsLoss" "BCEDice")
 AUGS=("none" "single" "double" "all")
 

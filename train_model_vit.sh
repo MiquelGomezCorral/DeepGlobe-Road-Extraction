@@ -20,7 +20,7 @@ for arc in "${ARCHS[@]}"; do
     for aug in "${AUGS[@]}"; do
       echo "🚀 Training with: $arc | $loss | $aug"
 
-      CMD="python main.py train-model -arc $arc -loss $loss -augset $aug -e $EPOCHS -b $BATCH_SIZE -s $MAX_STEPS -lr $LEARNING_RATE"
+      CMD="python main.py train-model -arc $arc -enc resnet18 -loss $loss -augset $aug -e $EPOCHS -b $BATCH_SIZE -s $MAX_STEPS -lr $LEARNING_RATE"
 
       # Only add -m if MAX_SAMPLES is not empty
       if [ -n "$MAX_SAMPLES" ]; then

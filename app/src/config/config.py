@@ -30,6 +30,7 @@ class Configuration:
     batch_size: int = 4
     max_steps: int = 1000
     learning_rate: float = 0.0001
+    patience: int = 3  # for early stopping
 
     in_channels: int = 3
     out_classes: int = 1
@@ -85,6 +86,7 @@ class Configuration:
             f"-EP_{self.epochs}"
             f"-LR_{self.learning_rate}"
             f"-AUG_{self.augmentation_set}"
+            f"-LSS_{self.loss_function}"
         )
         if self.max_samples is not None:
             self.model_name += f"-MS_{self.max_samples}"
