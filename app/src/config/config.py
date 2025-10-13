@@ -37,11 +37,13 @@ class Configuration:
 
     architecture: Literal["Unet", "FPN", "Linknet", "PSPNet", "ViT"] = "Unet"
     encoder_name: Literal["resnet18", "resnet34", "efficientnet-b0"] = "resnet34"
-    loss_function: Literal["DiceLoss", "BCEDice"] = "DiceLoss"
+    loss_function: Literal["DiceLoss", "BCEWithLogitsLoss", "BCEDice"] = "DiceLoss"
     augmentation_set: Literal["none", "single", "double", "all"] = "none"
 
     augmentation_chance: float = 0.75
     # ========================= PATHS ==========================
+    create_folders: bool = True
+
     MODELS_FOLDER: str = "../models"
     LOGS_FOLDER: str = "../logs"
     TEMP_FOLDER: str = "../temp"
@@ -100,18 +102,19 @@ class Configuration:
         self.log_file = os.path.join(self.log_folder, f"{self.model_name}.log")
         self.test_metrics_file = os.path.join(self.log_folder, "test_metrics.csv")
 
-        make_dirs(
-            [
-                self.train_img_folder,
-                self.train_gt_folder,
-                self.val_img_folder,
-                self.val_gt_folder,
-                self.test_img_folder,
-                self.test_gt_folder,
-                self.model_folder,
-                self.log_folder,
-            ]
-        )
+        if self.create_folders:
+            make_dirs(
+                [
+                    self.train_img_folder,
+                    self.train_gt_folder,
+                    self.val_img_folder,
+                    self.val_gt_folder,
+                    self.test_img_folder,
+                    self.test_gt_folder,
+                    self.model_folder,
+                    self.log_folder,
+                ]
+            )
 
     def print_config(self):
         """Print the configuration."""

@@ -1,0 +1,398 @@
+{
+    "ARC=FPN, ENC=resnet18, AUG=all, LSS=BCEDice": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_BCEDice/version_0/checkpoints/epoch=11-step=13080.ckpt",
+        {
+            "IoU_mean": 0.5513796310406935,
+            "Dice_mean": 0.6979881240589286,
+            "Precision_mean": 0.715269556645238,
+            "Recall_mean": 0.713985356804718,
+            "PixelAcc_mean": 0.9768575549890539,
+            "PR_AUC_mean": 0.7779579508877367
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=all, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=28-step=31610.ckpt",
+        {
+            "IoU_mean": 0.5502483866838634,
+            "Dice_mean": 0.6935514630551307,
+            "Precision_mean": 0.7780631907715698,
+            "Recall_mean": 0.6563887310170343,
+            "PixelAcc_mean": 0.9789407850587227,
+            "PR_AUC_mean": 0.8075859116055385
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=all, LSS=DiceLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_DiceLoss/version_0/checkpoints/epoch=24-step=27250.ckpt",
+        {
+            "IoU_mean": 0.566060967809717,
+            "Dice_mean": 0.7078984050287386,
+            "Precision_mean": 0.7475595683247279,
+            "Recall_mean": 0.7035068975582174,
+            "PixelAcc_mean": 0.9781345514464008,
+            "PR_AUC_mean": 0.7733080788573331
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=double, LSS=BCEDice": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_BCEDice/version_0/checkpoints/epoch=19-step=21800.ckpt",
+        {
+            "IoU_mean": 0.6016493692931408,
+            "Dice_mean": 0.7401552953226166,
+            "Precision_mean": 0.7448551140596503,
+            "Recall_mean": 0.7628460601967301,
+            "PixelAcc_mean": 0.98010387563594,
+            "PR_AUC_mean": 0.8217725697264647
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=double, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=16-step=18530.ckpt",
+        {
+            "IoU_mean": 0.5748313220231279,
+            "Dice_mean": 0.7169898552970494,
+            "Precision_mean": 0.7968006869480302,
+            "Recall_mean": 0.6749940317482271,
+            "PixelAcc_mean": 0.9800163224115194,
+            "PR_AUC_mean": 0.8265822739243952
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=double, LSS=DiceLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_DiceLoss/version_0/checkpoints/epoch=12-step=14170.ckpt",
+        {
+            "IoU_mean": 0.5553769589456584,
+            "Dice_mean": 0.6974359797193704,
+            "Precision_mean": 0.7643972310272334,
+            "Recall_mean": 0.6759368925790459,
+            "PixelAcc_mean": 0.978257091448607,
+            "PR_AUC_mean": 0.7582550892594856
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=none, LSS=BCEDice": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_BCEDice/version_0/checkpoints/epoch=15-step=17440.ckpt",
+        {
+            "IoU_mean": 0.6221161835800089,
+            "Dice_mean": 0.7557654665862992,
+            "Precision_mean": 0.782785512280301,
+            "Recall_mean": 0.7474817418993687,
+            "PixelAcc_mean": 0.9815973040888176,
+            "PR_AUC_mean": 0.8348124337800682
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=none, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=10-step=11990.ckpt",
+        {
+            "IoU_mean": 0.57817901722897,
+            "Dice_mean": 0.7199247903462423,
+            "Precision_mean": 0.7952227728210977,
+            "Recall_mean": 0.6789987583273402,
+            "PixelAcc_mean": 0.9799698067935769,
+            "PR_AUC_mean": 0.8288064750228129
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=none, LSS=DiceLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_DiceLoss/version_0/checkpoints/epoch=22-step=25070.ckpt",
+        {
+            "IoU_mean": 0.6176547801847672,
+            "Dice_mean": 0.7517276368302444,
+            "Precision_mean": 0.7902638710069839,
+            "Recall_mean": 0.7357448131807989,
+            "PixelAcc_mean": 0.9813707788699275,
+            "PR_AUC_mean": 0.8011661000068617
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=single, LSS=BCEDice": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_BCEDice/version_0/checkpoints/epoch=18-step=20710.ckpt",
+        {
+            "IoU_mean": 0.6112944887409957,
+            "Dice_mean": 0.7472741919219953,
+            "Precision_mean": 0.7793889254473798,
+            "Recall_mean": 0.7382973562653089,
+            "PixelAcc_mean": 0.9808904169967991,
+            "PR_AUC_mean": 0.8324334546190191
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=single, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=15-step=17440.ckpt",
+        {
+            "IoU_mean": 0.5903197586125573,
+            "Dice_mean": 0.728294759044437,
+            "Precision_mean": 0.7912879635023511,
+            "Recall_mean": 0.6992834660033335,
+            "PixelAcc_mean": 0.9806269894829741,
+            "PR_AUC_mean": 0.8361650518526057
+        }
+    ],
+    "ARC=FPN, ENC=resnet18, AUG=single, LSS=DiceLoss": [
+        "../logs/log-ARC_FPN-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_DiceLoss/version_0/checkpoints/epoch=24-step=27250.ckpt",
+        {
+            "IoU_mean": 0.606753714673613,
+            "Dice_mean": 0.7428232664205043,
+            "Precision_mean": 0.7869453154101348,
+            "Recall_mean": 0.7250908580247232,
+            "PixelAcc_mean": 0.9807482347752946,
+            "PR_AUC_mean": 0.791385551925181
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=all, LSS=BCEDice": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_BCEDice/version_0/checkpoints/epoch=27-step=30520.ckpt",
+        {
+            "IoU_mean": 0.48883954194660983,
+            "Dice_mean": 0.6409477079289237,
+            "Precision_mean": 0.6085452219539873,
+            "Recall_mean": 0.7179034738462619,
+            "PixelAcc_mean": 0.9697699577444978,
+            "PR_AUC_mean": 0.7206157409764326
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=all, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=34-step=38150.ckpt",
+        {
+            "IoU_mean": 0.4614483010461777,
+            "Dice_mean": 0.6120962327558835,
+            "Precision_mean": 0.7080726013006144,
+            "Recall_mean": 0.574216610699208,
+            "PixelAcc_mean": 0.9734935934078097,
+            "PR_AUC_mean": 0.717312072283599
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=all, LSS=DiceLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_DiceLoss/version_0/checkpoints/epoch=23-step=26160.ckpt",
+        {
+            "IoU_mean": 0.44086987355103374,
+            "Dice_mean": 0.5953296029662437,
+            "Precision_mean": 0.6353980044223946,
+            "Recall_mean": 0.5958760726103352,
+            "PixelAcc_mean": 0.970325006407292,
+            "PR_AUC_mean": 0.6550072761989091
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=double, LSS=BCEDice": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_BCEDice/version_0/checkpoints/epoch=19-step=21800.ckpt",
+        {
+            "IoU_mean": 0.5002151256896187,
+            "Dice_mean": 0.6488553259443263,
+            "Precision_mean": 0.7092386847678173,
+            "Recall_mean": 0.6332831476232035,
+            "PixelAcc_mean": 0.9745587005859361,
+            "PR_AUC_mean": 0.7394899570837374
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=double, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=24-step=27250.ckpt",
+        {
+            "IoU_mean": 0.4917560698541241,
+            "Dice_mean": 0.639645587680916,
+            "Precision_mean": 0.7192353895836326,
+            "Recall_mean": 0.6146594579848305,
+            "PixelAcc_mean": 0.9748632647495036,
+            "PR_AUC_mean": 0.7452862464890674
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=double, LSS=DiceLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_DiceLoss/version_0/checkpoints/epoch=32-step=35970.ckpt",
+        {
+            "IoU_mean": 0.5082134925834959,
+            "Dice_mean": 0.6565608514440584,
+            "Precision_mean": 0.7190179985538804,
+            "Recall_mean": 0.6382627186105705,
+            "PixelAcc_mean": 0.975091158194929,
+            "PR_AUC_mean": 0.7331002875155961
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=none, LSS=BCEDice": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_BCEDice/version_0/checkpoints/epoch=21-step=23980.ckpt",
+        {
+            "IoU_mean": 0.5272359897971913,
+            "Dice_mean": 0.6712222644392527,
+            "Precision_mean": 0.7567949315560178,
+            "Recall_mean": 0.6397621746221573,
+            "PixelAcc_mean": 0.9771427444522425,
+            "PR_AUC_mean": 0.7770159191329816
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=none, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=26-step=29430.ckpt",
+        {
+            "IoU_mean": 0.5240749705606592,
+            "Dice_mean": 0.6704303401108294,
+            "Precision_mean": 0.7747561986124689,
+            "Recall_mean": 0.6199745425249122,
+            "PixelAcc_mean": 0.9775583095672133,
+            "PR_AUC_mean": 0.7864344184733351
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=none, LSS=DiceLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_DiceLoss/version_0/checkpoints/epoch=36-step=40330.ckpt",
+        {
+            "IoU_mean": 0.5549349627630671,
+            "Dice_mean": 0.7011235488453851,
+            "Precision_mean": 0.7153219890566046,
+            "Recall_mean": 0.7116830882334492,
+            "PixelAcc_mean": 0.9771332516148553,
+            "PR_AUC_mean": 0.7697145220831444
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=single, LSS=BCEDice": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_BCEDice/version_0/checkpoints/epoch=32-step=35970.ckpt",
+        {
+            "IoU_mean": 0.5437016394713742,
+            "Dice_mean": 0.6894696323940608,
+            "Precision_mean": 0.7285822937285312,
+            "Recall_mean": 0.6836801228723293,
+            "PixelAcc_mean": 0.9768328074468626,
+            "PR_AUC_mean": 0.774792953855421
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=single, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=36-step=40330.ckpt",
+        {
+            "IoU_mean": 0.5339686670740457,
+            "Dice_mean": 0.6819971747473341,
+            "Precision_mean": 0.7434142308603084,
+            "Recall_mean": 0.6545900505694171,
+            "PixelAcc_mean": 0.9771264349877286,
+            "PR_AUC_mean": 0.7811402990848991
+        }
+    ],
+    "ARC=PSPNet, ENC=resnet18, AUG=single, LSS=DiceLoss": [
+        "../logs/log-ARC_PSPNet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_DiceLoss/version_0/checkpoints/epoch=31-step=34880.ckpt",
+        {
+            "IoU_mean": 0.5264153122226076,
+            "Dice_mean": 0.6762597933631835,
+            "Precision_mean": 0.6671734536297832,
+            "Recall_mean": 0.7171565802621326,
+            "PixelAcc_mean": 0.9747539015856841,
+            "PR_AUC_mean": 0.7413755529560221
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=all, LSS=BCEDice": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_BCEDice/version_0/checkpoints/epoch=16-step=18530.ckpt",
+        {
+            "IoU_mean": 0.5578520021829051,
+            "Dice_mean": 0.7004916363358396,
+            "Precision_mean": 0.7136453300477295,
+            "Recall_mean": 0.7258016300087845,
+            "PixelAcc_mean": 0.9769286415050157,
+            "PR_AUC_mean": 0.7941261802818843
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=all, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=15-step=17440.ckpt",
+        {
+            "IoU_mean": 0.5364412112349358,
+            "Dice_mean": 0.679991374880864,
+            "Precision_mean": 0.8031525114466704,
+            "Recall_mean": 0.6214403315137477,
+            "PixelAcc_mean": 0.978584173149326,
+            "PR_AUC_mean": 0.8108550356823958
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=all, LSS=DiceLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_all-LSS_DiceLoss/version_0/checkpoints/epoch=29-step=32700.ckpt",
+        {
+            "IoU_mean": 0.5695568729731467,
+            "Dice_mean": 0.7129807815147858,
+            "Precision_mean": 0.6891779311104582,
+            "Recall_mean": 0.7731010499257394,
+            "PixelAcc_mean": 0.9764373195247006,
+            "PR_AUC_mean": 0.7434602253715876
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=double, LSS=BCEDice": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_BCEDice/version_0/checkpoints/epoch=20-step=22890.ckpt",
+        {
+            "IoU_mean": 0.591562649343007,
+            "Dice_mean": 0.7314573734349251,
+            "Precision_mean": 0.7096594612941598,
+            "Recall_mean": 0.786201495717492,
+            "PixelAcc_mean": 0.9789217013617488,
+            "PR_AUC_mean": 0.8234670825020176
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=double, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=11-step=13080.ckpt",
+        {
+            "IoU_mean": 0.5560512874086749,
+            "Dice_mean": 0.6946443017816342,
+            "Precision_mean": 0.8093795333360203,
+            "Recall_mean": 0.6452726912266797,
+            "PixelAcc_mean": 0.9798658164715701,
+            "PR_AUC_mean": 0.8258652485303409
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=double, LSS=DiceLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_double-LSS_DiceLoss/version_0/checkpoints/epoch=17-step=19620.ckpt",
+        {
+            "IoU_mean": 0.5794571378482075,
+            "Dice_mean": 0.7182349446456275,
+            "Precision_mean": 0.735995290576509,
+            "Recall_mean": 0.7371041785038958,
+            "PixelAcc_mean": 0.9786060494579224,
+            "PR_AUC_mean": 0.7425855154560683
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=none, LSS=BCEDice": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_BCEDice/version_0/checkpoints/epoch=14-step=16350.ckpt",
+        {
+            "IoU_mean": 0.6164868825677976,
+            "Dice_mean": 0.7500373534494937,
+            "Precision_mean": 0.7653920872717329,
+            "Recall_mean": 0.7611484053858683,
+            "PixelAcc_mean": 0.9811631270087081,
+            "PR_AUC_mean": 0.8402570957992705
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=none, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=10-step=11990.ckpt",
+        {
+            "IoU_mean": 0.6046480498370875,
+            "Dice_mean": 0.7422081213069144,
+            "Precision_mean": 0.7912493693677544,
+            "Recall_mean": 0.720463184277483,
+            "PixelAcc_mean": 0.9811507169898199,
+            "PR_AUC_mean": 0.8433923608104672
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=none, LSS=DiceLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_none-LSS_DiceLoss/version_0/checkpoints/epoch=10-step=11990.ckpt",
+        {
+            "IoU_mean": 0.5731760564157935,
+            "Dice_mean": 0.7106541014985924,
+            "Precision_mean": 0.7433595040833219,
+            "Recall_mean": 0.7174766826942677,
+            "PixelAcc_mean": 0.9785423054173455,
+            "PR_AUC_mean": 0.7271448428218682
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=single, LSS=BCEDice": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_BCEDice/version_0/checkpoints/epoch=15-step=17440.ckpt",
+        {
+            "IoU_mean": 0.6014472695770915,
+            "Dice_mean": 0.7388392188339463,
+            "Precision_mean": 0.7447560606376409,
+            "Recall_mean": 0.760703404728067,
+            "PixelAcc_mean": 0.9799645697533533,
+            "PR_AUC_mean": 0.8317961553387947
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=single, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=12-step=14170.ckpt",
+        {
+            "IoU_mean": 0.5922764470127813,
+            "Dice_mean": 0.7288017061128006,
+            "Precision_mean": 0.7925736190204706,
+            "Recall_mean": 0.7038287094413254,
+            "PixelAcc_mean": 0.9807469921397025,
+            "PR_AUC_mean": 0.8391465013924261
+        }
+    ],
+    "ARC=Unet, ENC=resnet18, AUG=single, LSS=DiceLoss": [
+        "../logs/log-ARC_Unet-EN_resnet18-BS_4-EP_100-LR_0.0001-AUG_single-LSS_DiceLoss/version_0/checkpoints/epoch=32-step=35970.ckpt",
+        {
+            "IoU_mean": 0.6107794710977702,
+            "Dice_mean": 0.7462619912478764,
+            "Precision_mean": 0.7241829866121446,
+            "Recall_mean": 0.7963272024432407,
+            "PixelAcc_mean": 0.9797736807093207,
+            "PR_AUC_mean": 0.762085407012103
+        }
+    ]
+}

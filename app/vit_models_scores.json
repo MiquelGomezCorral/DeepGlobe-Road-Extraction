@@ -1,0 +1,134 @@
+{
+    "ARC=ViT, ENC=resnet18, AUG=all, LSS=BCEDice": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_all-LSS_BCEDice/version_0/checkpoints/epoch=12-step=28327.ckpt",
+        {
+            "IoU_mean": 0.5294755741541147,
+            "Dice_mean": 0.6759948049491139,
+            "Precision_mean": 0.7205511631603692,
+            "Recall_mean": 0.6688963856817168,
+            "PixelAcc_mean": 0.9759937476294036,
+            "PR_AUC_mean": 0.7541006748955115
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=all, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_all-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=18-step=41401.ckpt",
+        {
+            "IoU_mean": 0.5351603850930842,
+            "Dice_mean": 0.6797469001717166,
+            "Precision_mean": 0.806176620456497,
+            "Recall_mean": 0.6168425991962257,
+            "PixelAcc_mean": 0.9785521198900748,
+            "PR_AUC_mean": 0.8072029329825922
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=all, LSS=DiceLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_all-LSS_DiceLoss/version_0/checkpoints/epoch=10-step=23969.ckpt",
+        {
+            "IoU_mean": 0.47838926406134197,
+            "Dice_mean": 0.6321103097961622,
+            "Precision_mean": 0.5498132385229808,
+            "Recall_mean": 0.7954829187121509,
+            "PixelAcc_mean": 0.9667331564859455,
+            "PR_AUC_mean": 0.7034692769824812
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=double, LSS=BCEDice": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_double-LSS_BCEDice/version_0/checkpoints/epoch=34-step=76265.ckpt",
+        {
+            "IoU_mean": 0.6000335296229969,
+            "Dice_mean": 0.7376584112258038,
+            "Precision_mean": 0.7534012647983029,
+            "Recall_mean": 0.7477124435920472,
+            "PixelAcc_mean": 0.9800621386002254,
+            "PR_AUC_mean": 0.8170147674149547
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=double, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_double-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=11-step=26148.ckpt",
+        {
+            "IoU_mean": 0.564178440278455,
+            "Dice_mean": 0.7059337437613191,
+            "Precision_mean": 0.7753910500681023,
+            "Recall_mean": 0.684641715146899,
+            "PixelAcc_mean": 0.9788896991557265,
+            "PR_AUC_mean": 0.8120089974721032
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=double, LSS=DiceLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_double-LSS_DiceLoss/version_0/checkpoints/epoch=29-step=65370.ckpt",
+        {
+            "IoU_mean": 0.5734192998136652,
+            "Dice_mean": 0.7162640403707297,
+            "Precision_mean": 0.7011693211137032,
+            "Recall_mean": 0.7634731356659527,
+            "PixelAcc_mean": 0.9773285189838009,
+            "PR_AUC_mean": 0.775058274088026
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=none, LSS=BCEDice": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_none-LSS_BCEDice/version_0/checkpoints/epoch=3-step=8716.ckpt",
+        {
+            "IoU_mean": 0.5649563687782284,
+            "Dice_mean": 0.7097642784733682,
+            "Precision_mean": 0.7159304592843315,
+            "Recall_mean": 0.7322541062501868,
+            "PixelAcc_mean": 0.9774099621577833,
+            "PR_AUC_mean": 0.7903356621995751
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=none, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_none-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=8-step=19611.ckpt",
+        {
+            "IoU_mean": 0.5917697900078747,
+            "Dice_mean": 0.730610316616206,
+            "Precision_mean": 0.7473176325245446,
+            "Recall_mean": 0.7410862117870046,
+            "PixelAcc_mean": 0.9794157189525512,
+            "PR_AUC_mean": 0.8253321429743307
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=none, LSS=DiceLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_none-LSS_DiceLoss/version_0/checkpoints/epoch=21-step=47938.ckpt",
+        {
+            "IoU_mean": 0.5918819631239506,
+            "Dice_mean": 0.732468210833426,
+            "Precision_mean": 0.7164662385408069,
+            "Recall_mean": 0.7747864733754762,
+            "PixelAcc_mean": 0.978122782656068,
+            "PR_AUC_mean": 0.7908663288886716
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=single, LSS=BCEDice": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_single-LSS_BCEDice/version_0/checkpoints/epoch=8-step=19611.ckpt",
+        {
+            "IoU_mean": 0.5630310362315385,
+            "Dice_mean": 0.7077542014108,
+            "Precision_mean": 0.6511817436200853,
+            "Recall_mean": 0.8128483748953647,
+            "PixelAcc_mean": 0.9754486706832838,
+            "PR_AUC_mean": 0.7920599881320347
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=single, LSS=BCEWithLogitsLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_single-LSS_BCEWithLogitsLoss/version_0/checkpoints/epoch=11-step=26148.ckpt",
+        {
+            "IoU_mean": 0.593818014418234,
+            "Dice_mean": 0.7323541720815143,
+            "Precision_mean": 0.7788718872916454,
+            "Recall_mean": 0.7139445821554444,
+            "PixelAcc_mean": 0.9804900177540141,
+            "PR_AUC_mean": 0.8338813653530935
+        }
+    ],
+    "ARC=ViT, ENC=resnet18, AUG=single, LSS=DiceLoss": [
+        "../logs/log-ARC_ViT-EN_resnet18-BS_2-EP_100-LR_0.0001-AUG_single-LSS_DiceLoss/version_0/checkpoints/epoch=30-step=67549.ckpt",
+        {
+            "IoU_mean": 0.586402248810776,
+            "Dice_mean": 0.7280115771334312,
+            "Precision_mean": 0.7212129735095525,
+            "Recall_mean": 0.761097515536903,
+            "PixelAcc_mean": 0.9785404981330413,
+            "PR_AUC_mean": 0.7895793539316076
+        }
+    ]
+}

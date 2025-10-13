@@ -20,7 +20,13 @@ class RoadSegmentationDataset(Dataset):
     data augmentation pipelines, and prepares the data for training a segmentation model.
     """
 
-    def __init__(self, root_dir: str, CONFIG: Configuration, pipelines: list[PipeType] = None):
+    def __init__(
+        self,
+        root_dir: str,
+        CONFIG: Configuration,
+        pipelines: list[PipeType] = None,
+        verbose: bool = True,
+    ):
         self.augmentation_chance = CONFIG.augmentation_chance
         self.pipelines = pipelines
 
@@ -39,7 +45,8 @@ class RoadSegmentationDataset(Dataset):
         ]
         self.N = len(self.sample_points)
         self.seeds = split_seed(seed=CONFIG.seed, n=self.N)
-        print(f" - Dataset initialized with {self.N} samples from {root_dir}")
+        if verbose:
+            print(f" - Dataset initialized with {self.N} samples from {root_dir}")
 
     def __len__(self):
         """Return the total number of samples in the dataset."""

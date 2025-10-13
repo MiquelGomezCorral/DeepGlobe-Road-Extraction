@@ -4,6 +4,7 @@ This module contains various utility functions that are used throughout the proj
 """
 import os
 import random
+import re
 
 import numpy as np
 import torch
@@ -11,6 +12,38 @@ from maikol_utils.file_utils import list_dir_files
 from maikol_utils.print_utils import print_error, print_log
 from PIL import Image
 from src.config import Configuration
+
+
+class PathParser:
+    """Class to parse model path and extract configuration."""
+
+    pattern = re.compile(r"ARC_(.+?)-EN_(.+?)-BS_\d+-EP_\d+-LR_[\d.]+-AUG_(.+?)-LSS_(.+?)/")
+
+    def __init__(self, path):
+        self.path = path
+
+        match = self.pattern.search(path)
+        if match:
+            arc, enc, aug, lss = match.groups()
+            self.arc = arc
+            self.enc = enc
+            self.aug = aug
+            self.lss = lss
+            self.name = f"ARC={arc}, ENC={enc}, AUG={aug}, LSS={lss}"
+
+    def get_config(self):
+        """Get configuration from parsed path."""
+        return Configuration(
+            architecture=self.arc,
+            encoder_name=self.enc,
+            augmentation_set=self.aug,
+            loss_function=self.lss,
+            create_folders=False,
+        )
+
+    def __repr__(self):
+        """Get String representation of the PathParser object."""
+        return f"{self.name}"
 
 
 def set_seed(seed: int) -> None:
