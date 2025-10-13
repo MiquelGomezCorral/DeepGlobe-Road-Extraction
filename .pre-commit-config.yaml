@@ -71,3 +71,4 @@ repos:
     hooks:
       - id: nbstripout
         language_version: python3.12
+        exclude: ../notebooks/RFA_Memoría_Proyecto.ipynb
