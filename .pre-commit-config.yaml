@@ -66,9 +66,9 @@ repos:
           - flake8-bugbear==22.8.23
           - flake8-comprehensions==3.10.0
           - flake8-docstrings==1.6.0
-  - repo: https://github.com/kynan/nbstripout
-    rev: 0.8.1
-    hooks:
-      - id: nbstripout
-        language_version: python3.12
-        exclude: ../notebooks/RFA_Memoría_Proyecto.ipynb
+  # - repo: https://github.com/kynan/nbstripout
+  #   rev: 0.8.1
+  #   hooks:
+  #     - id: nbstripout
+  #       language_version: python3.12
+  #       exclude: ../notebooks/RFA_Memoría_Proyecto.ipynb

@@ -12,8 +12,3 @@ from .utils import (  # noqa: F401
     split_seed,
     to_device,
 )
-from .visualizations import (  # noqa: F401
-    plot_iou_boxplots_by_parameter,
-    plot_model_scores,
-    plot_model_scores_by_architecture,
-)
