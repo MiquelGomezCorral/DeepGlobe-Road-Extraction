@@ -8,6 +8,7 @@ import os
 import matplotlib.pyplot as plt
 import torch
 from maikol_utils.print_utils import print_log
+from PIL import Image
 from src.config import Configuration
 from src.data import AUG_PIPELINES
 from src.models import RoadSegmentationDataset, RoadSegmentationModel
@@ -112,6 +113,40 @@ def visualize_model_predictions(
         axes[row_block + 2, col].axis("off")
 
     plt.tight_layout()
-    plt.savefig(f"{CONFIG.log_folder}/model_predictions.png")
+    save_path = os.path.join(CONFIG.log_folder, f"model_predictions_{model.__class__.__name__}.png")
+    plt.savefig(save_path)
     if show:
         plt.show()
+
+    plt.close()
+    return save_path
+
+
+def combine_prediction_plots(image_paths, output_name="combined.png", show=False):
+    """Combine multiple prediction plots vertically into a single image."""
+    images = [Image.open(p) for p in image_paths if os.path.exists(p)]
+    if not images:
+        raise ValueError("No valid images found to combine")
+
+    widths, heights = zip(*(img.size for img in images))
+    total_height = sum(heights)
+    max_width = max(widths)
+
+    combined = Image.new("RGB", (max_width, total_height), color=(255, 255, 255))
+
+    y_offset = 0
+    for img in images:
+        combined.paste(img, (0, y_offset))
+        y_offset += img.height
+
+    os.makedirs(os.path.dirname(output_name) or ".", exist_ok=True)
+    combined.save(output_name)
+
+    if show:
+        plt.figure(figsize=(len(image_paths) * 20, len(image_paths) * 10))
+        plt.imshow(combined)
+        plt.axis("off")
+        plt.title("Combined Predictions")
+        plt.show()
+
+    return output_name
