@@ -74,6 +74,8 @@ class Configuration:
     log_folder: str = os.path.join(LOGS_FOLDER, model_name)
     log_file: str = os.path.join(log_folder, f"{model_name}.log")
     test_metrics_file: str = os.path.join(log_folder, "test_metrics.csv")
+    cnn_model_scores: str = os.path.join(LOGS_FOLDER, "cnn_models_scores.json")
+    vit_model_scores: str = os.path.join(LOGS_FOLDER, "vit_models_scores.json")
 
     def __post_init__(self):
         """Post-initialization."""
