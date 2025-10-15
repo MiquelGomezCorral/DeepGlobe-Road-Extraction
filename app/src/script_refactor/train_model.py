@@ -55,6 +55,7 @@ def visualize_model_predictions(
     CONFIG: Configuration,
     model: RoadSegmentationModel,
     test_dataloader: RoadSegmentationDataset,
+    idx: int = 0,
     max_samples: int = 20,
     cols_per_row: int = 5,
     show: bool = False,
@@ -113,7 +114,9 @@ def visualize_model_predictions(
         axes[row_block + 2, col].axis("off")
 
     plt.tight_layout()
-    save_path = os.path.join(CONFIG.log_folder, f"model_predictions_{model.__class__.__name__}.png")
+    save_path = os.path.join(
+        CONFIG.log_folder, f"model_predictions_{model.__class__.__name__}{idx}.png"
+    )
     plt.savefig(save_path)
     if show:
         plt.show()
