@@ -88,9 +88,14 @@ options:
 ## Gallery
 
 <p align="center">
-  <img src="readme-images/data-augmentation_169.png" width="48%" />
-  <img src="readme-images/data-augmentation2_169.png" width="48%" />
-  <img src="readme-images/dataset_169.png" width="48%" />
-  <img src="readme-images/metrics-models_169.png" width="48%" />
+  <img src="readme-images/thumbnail_169.png" alt="thumbnail" width="48%" />
+  <img src="readme-images/data-augmentation2_169.png" alt="data augmentation2" width="48%" />
+  <img src="readme-images/data-augmentation_169.png" alt="data augmentation" width="48%" />
+  <img src="readme-images/dataset_169.png" alt="dataset" width="48%" />
+  <img src="readme-images/metrics-models_169.png" alt="metrics models" width="48%" />
+  <img src="readme-images/metris-data-agumentation_169.png" alt="metris data agumentation" width="48%" />
+  <img src="readme-images/models_169.png" alt="models" width="48%" />
+  <img src="readme-images/predictions2_169.png" alt="predictions2" width="48%" />
+  <img src="readme-images/predictions_169.png" alt="predictions" width="48%" />
 </p>
 <!-- portfolio-gallery:end -->
